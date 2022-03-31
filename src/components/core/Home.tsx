@@ -1,11 +1,12 @@
 import { Text } from "haki-ui";
-import "../styles.css";
+import "../../styles.css";
+import Layout from "./Layout";
 
 const Home = () => {
   return (
-    <div>
+    <Layout>
       <Text>hi from frontend</Text>
-    </div>
+    </Layout>
   );
 };
 
