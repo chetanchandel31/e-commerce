@@ -2,6 +2,10 @@ import { useTheme } from "haki-ui";
 import { NavLink } from "react-router-dom";
 import { StyledHeaderContainer, StyledNavMenuContainer } from "./styles";
 
+const getActiveLinkStyles = ({ isActive }: { isActive: boolean }) => ({
+  ...(isActive ? { fontWeight: 600 } : {}),
+});
+
 const Header = () => {
   const theme = useTheme();
 
@@ -11,32 +15,39 @@ const Header = () => {
         {/* TODO: extract to `NavMenu` component later if needed */}
         <StyledNavMenuContainer>
           <li>
-            <NavLink
-              style={({ isActive }) => ({
-                ...(isActive ? { fontWeight: 600 } : {}),
-              })}
-              to="/"
-            >
+            <NavLink style={getActiveLinkStyles} to="/">
               Home
             </NavLink>
           </li>
           <li>
-            <NavLink to="/aa">Cart</NavLink>
+            <NavLink style={getActiveLinkStyles} to="/aa">
+              Cart
+            </NavLink>
           </li>
           <li>
-            <NavLink to="/aa">Dashboard</NavLink>
+            <NavLink style={getActiveLinkStyles} to="/aa">
+              Dashboard
+            </NavLink>
           </li>
           <li>
-            <NavLink to="/aa">A.Dashboard</NavLink>
+            <NavLink style={getActiveLinkStyles} to="/aa">
+              A.Dashboard
+            </NavLink>
           </li>
           <li>
-            <NavLink to="/aa">Signup</NavLink>
+            <NavLink style={getActiveLinkStyles} to="/signup">
+              Signup
+            </NavLink>
           </li>
           <li>
-            <NavLink to="/aa">Sign in</NavLink>
+            <NavLink style={getActiveLinkStyles} to="/signin">
+              Sign in
+            </NavLink>
           </li>
           <li>
-            <NavLink to="/aa">Signout</NavLink>
+            <NavLink style={getActiveLinkStyles} to="/aa">
+              Signout
+            </NavLink>
           </li>
         </StyledNavMenuContainer>
       </StyledHeaderContainer>

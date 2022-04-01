@@ -20,3 +20,9 @@ export const StyledNavMenuContainer = styled.ul`
     color: #fff;
   }
 `;
+
+export const Container = styled.div`
+  max-width: 62rem;
+  margin: auto;
+  text-align: center;
+`;
