@@ -53,9 +53,10 @@ const Signup = () => {
 
   const doDisableSubmit = !name || !email || !password;
 
-  // TODO: errors for small password etc.
   // TODO: re-enter password
+  // TODO: errors for password don't match etc.
   // TODO: loading state
+  // TODO: show password
   return (
     <Layout>
       <StyledAuthForm onSubmit={handleSubmit}>

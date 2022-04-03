@@ -9,4 +9,5 @@ export const StyledAuthForm = styled.form`
   width: 90%;
   max-width: 400px;
   margin: auto;
+  margin-top: 6rem;
 `;
