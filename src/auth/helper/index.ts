@@ -1,32 +1,6 @@
 import { API } from "api";
 
 // TODO: better type annotations
-export const signup = async (user: {
-  name: string;
-  email: string;
-  password: string;
-}) => {
-  try {
-    const res = await API.post("/signup", user);
-
-    return res.data;
-  } catch (error: any) {
-    console.log(JSON.stringify(error), "error");
-    return error?.response?.data;
-  }
-};
-
-export const signin = async (user: { email: string; password: string }) => {
-  try {
-    const res = await API.post("/signin", user);
-
-    return res.data;
-  } catch (error: any) {
-    console.log(JSON.stringify(error));
-
-    return error?.response?.data;
-  }
-};
 
 export const authenticate = (data: any, next: any) => {
   localStorage.setItem("jwt", JSON.stringify(data));

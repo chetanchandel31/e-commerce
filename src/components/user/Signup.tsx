@@ -1,21 +1,20 @@
-import { signup } from "auth/helper";
+import useEndpoint from "api/useEndpoint";
 import Layout from "components/core/Layout";
-import { Alert, Button, IconButton, Input, useTheme } from "haki-ui";
+import { Alert, Button, IconButton, Input, Text, useTheme } from "haki-ui";
 import { ChangeEvent, FormEvent, useState } from "react";
-import {
-  AiFillEyeInvisible,
-  AiOutlineMail,
-  AiOutlineUser,
-} from "react-icons/ai";
+import { AiOutlineMail, AiOutlineUser } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
+import { eyeIcon } from "./helper/eyeIcon";
 import { StyledAuthForm } from "./styles";
+import { SignupReqBody, SignupResponse } from "./types";
 
-const signupInitialState = {
+const signupDataInitialState = {
   name: "",
   email: "",
   password: "",
-  error: "",
-  success: false,
+  reEnterPassword: "",
+  doShowPassword: false,
+  doShowReEnterPassword: false,
 };
 
 const Signup = () => {
@@ -24,39 +23,44 @@ const Signup = () => {
 
   const navigate = useNavigate();
 
-  const [signupData, setSignupData] = useState(signupInitialState);
-  const { email, name, password, success, error } = signupData;
+  const signupEndpointState = useEndpoint<SignupReqBody, SignupResponse>({
+    endpoint: "/signup",
+    method: "POST",
+  });
+  const { error, isLoading, makeRequest, result } = signupEndpointState;
+
+  const [signupData, setSignupData] = useState(signupDataInitialState);
+  const {
+    email,
+    name,
+    password,
+    reEnterPassword,
+    doShowPassword,
+    doShowReEnterPassword,
+  } = signupData;
 
   const handleChange = ({ target }: ChangeEvent<HTMLInputElement>) =>
     setSignupData((prev) => ({ ...prev, [target.name]: target.value }));
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
-    try {
-      const result = await signup({ email, name, password });
-      console.log(result, "result");
-
-      if (!result || typeof result?.error == "string") {
-        setSignupData((prev) => ({
-          ...prev,
-          error: result?.error || "request failed",
-          success: false,
-        }));
-      } else {
-        setSignupData({ ...signupInitialState, success: true });
-      }
-    } catch (error) {
-      console.log("signup failed", error);
-    }
+    makeRequest({ email, name, password });
   };
 
-  const doDisableSubmit = !name || !email || !password;
+  const doDisableSubmit =
+    !name || !email || !password || reEnterPassword !== password;
 
-  // TODO: re-enter password
-  // TODO: errors for password don't match etc.
-  // TODO: loading state
-  // TODO: show password
+  const toggleShowPassword = () =>
+    setSignupData((prev) => ({
+      ...prev,
+      doShowPassword: !prev.doShowPassword,
+    }));
+  const toggleShowReEnterPassword = () =>
+    setSignupData((prev) => ({
+      ...prev,
+      doShowReEnterPassword: !prev.doShowReEnterPassword,
+    }));
+
   return (
     <Layout>
       <StyledAuthForm onSubmit={handleSubmit}>
@@ -88,42 +92,61 @@ const Signup = () => {
           rightAdornment={
             <IconButton
               circular
-              icon={
-                <AiFillEyeInvisible
-                  type="button"
-                  style={{ color: iconColor }}
-                />
-              }
-              onClick={() => {}}
+              icon={eyeIcon(doShowPassword)}
+              onClick={toggleShowPassword}
               size="sm"
               type="button"
               variant="ghost"
             />
           }
-          type="password"
+          type={doShowPassword ? "text" : "password"}
           value={password}
         />
+        <Input
+          error={password.length > 0 && password !== reEnterPassword}
+          errorMessage="password doesn't match"
+          fullWidth
+          name="reEnterPassword"
+          onChange={handleChange}
+          placeholder="re-enter password"
+          required
+          rightAdornment={
+            <IconButton
+              circular
+              icon={eyeIcon(doShowReEnterPassword)}
+              onClick={toggleShowReEnterPassword}
+              size="sm"
+              type="button"
+              variant="ghost"
+            />
+          }
+          type={doShowReEnterPassword ? "text" : "password"}
+          value={reEnterPassword}
+        />
 
-        <Button disabled={doDisableSubmit} fullWidth>
+        {error && (
+          <Text color="danger" variant="caption">
+            {error}
+          </Text>
+        )}
+
+        <Button disabled={doDisableSubmit} fullWidth isLoading={isLoading}>
           Sign up
         </Button>
       </StyledAuthForm>
 
-      <Alert show={success}>
+      <Alert color="secondary" show={result !== null}>
         <Alert.Title>Signup successful</Alert.Title>
         <Alert.Body>
           new account created successfully:{" "}
-          <Button onClick={() => navigate("/signin")}>Login</Button>
+          <Button
+            color="secondary"
+            onClick={() => navigate("/signin")}
+            size="sm"
+          >
+            Login
+          </Button>
         </Alert.Body>
-      </Alert>
-
-      <Alert
-        color={"danger"}
-        onClose={() => setSignupData((prev) => ({ ...prev, error: "" }))}
-        show={Boolean(error)}
-      >
-        <Alert.Title>Signup failed</Alert.Title>
-        <Alert.Body>{error}</Alert.Body>
       </Alert>
     </Layout>
   );

@@ -10,4 +10,8 @@ export const StyledAuthForm = styled.form`
   max-width: 400px;
   margin: auto;
   margin-top: 6rem;
+
+  & > button {
+    margin-top: 1rem;
+  }
 `;

@@ -3,41 +3,37 @@ import { authenticate, getJwtfromLocalstorage } from "auth/helper";
 import Layout from "components/core/Layout";
 import { Button, IconButton, Input, Text, useTheme } from "haki-ui";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
-import { AiFillEyeInvisible, AiOutlineMail } from "react-icons/ai";
+import { AiOutlineMail } from "react-icons/ai";
+import { eyeIcon } from "./helper/eyeIcon";
 import { StyledAuthForm } from "./styles";
+import { SigninReqBody, SigninResponse } from "./types";
 
-const signinInitialState = {
+const signinDataInitialState = {
   email: "",
   password: "",
-};
-
-type SigninReqBody = { email: string; password: string };
-type SigninResponse = {
-  token: string;
-  user: {
-    email: string;
-    name: string;
-    role: number;
-    _id: string;
-  };
+  doShowPassword: false,
 };
 
 const Signin = () => {
+  const theme = useTheme();
+  const iconColor = theme.colors.disabled.dark;
+
   const signinEndpointState = useEndpoint<SigninReqBody, SigninResponse>({
     endpoint: "/signin",
     method: "POST",
   });
   const { error, isLoading, makeRequest, result } = signinEndpointState;
 
-  const [signinData, setSigninData] = useState(signinInitialState);
-  const { email, password } = signinData;
+  const [signinData, setSigninData] = useState(signinDataInitialState);
+  const { email, password, doShowPassword } = signinData;
+
   const handleChange = ({ target }: ChangeEvent<HTMLInputElement>) =>
     setSigninData((prev) => ({ ...prev, [target.name]: target.value }));
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const data = await makeRequest({ email, password });
-    authenticate(data, () => setSigninData(signinInitialState)); // TODO: remove next()
+    authenticate(data, () => setSigninData(signinDataInitialState)); // TODO: remove next()
   };
 
   const performRedirect = (didRedirect: boolean) => {
@@ -53,13 +49,15 @@ const Signin = () => {
     if (result !== null && !error) {
       // performRedirect()
     }
-  }, [result]);
-
-  const theme = useTheme();
-
-  const iconColor = theme.colors.disabled.dark;
+  }, [result, error]);
 
   const doDisableSignin = !email || !password;
+
+  const toggleShowPassword = () =>
+    setSigninData((prev) => ({
+      ...prev,
+      doShowPassword: !prev.doShowPassword,
+    }));
 
   return (
     <Layout>
@@ -83,19 +81,14 @@ const Signin = () => {
           rightAdornment={
             <IconButton
               circular
-              icon={
-                <AiFillEyeInvisible
-                  type="button"
-                  style={{ color: iconColor }}
-                />
-              }
-              onClick={() => {}}
+              icon={eyeIcon(doShowPassword)}
+              onClick={toggleShowPassword}
               size="sm"
               type="button"
               variant="ghost"
             />
           }
-          type="password"
+          type={doShowPassword ? "text" : "password"}
           value={password}
         />
 
