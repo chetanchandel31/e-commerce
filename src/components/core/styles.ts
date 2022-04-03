@@ -25,7 +25,6 @@ export const Container = styled.div`
   width: 100%;
   max-width: 62rem;
   margin: auto;
-  text-align: center;
 
   flex-grow: 1;
 `;

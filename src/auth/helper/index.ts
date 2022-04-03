@@ -1,13 +1,18 @@
 import { API } from "api";
 
 // TODO: better type annotations
-export const signup = async (user: any) => {
+export const signup = async (user: {
+  name: string;
+  email: string;
+  password: string;
+}) => {
   try {
     const res = await API.post("/signup", user);
 
     return res.data;
-  } catch (error) {
-    console.log(error);
+  } catch (error: any) {
+    console.log(JSON.stringify(error), "error");
+    return error?.response?.data;
   }
 };
 
