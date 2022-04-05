@@ -15,9 +15,18 @@ export const StyledNavMenuContainer = styled.ul`
   gap: 1rem;
   flex-wrap: wrap;
 
-  & a {
+  & a,
+  .nav-link {
     text-decoration: none;
     color: #fff;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  & .signout-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 2px;
   }
 `;
 

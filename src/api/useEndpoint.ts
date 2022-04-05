@@ -18,6 +18,7 @@ type Args =
 const useEndpoint = <RequestBody, Response>(args: Args) => {
   const { endpoint, method = "GET" } = args;
 
+  // `RESULT` WILL BE TRUTHY ONLY IF REQUEST SUCCEEDS, A FAILED REQUEST'S RESPONSE GOES TO `ERROR` AND NOT TO `RESULT`
   const [result, setResult] = useState<Response | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -49,7 +50,7 @@ const useEndpoint = <RequestBody, Response>(args: Args) => {
     }
   };
 
-  return { error, makeRequest, isLoading, result };
+  return { error, isLoading, makeRequest, result };
 };
 
 export default useEndpoint;

@@ -1,5 +1,6 @@
 import { useTheme } from "haki-ui";
 import { NavLink } from "react-router-dom";
+import SignoutNavItem from "./SignoutNavItem";
 import { StyledHeaderContainer, StyledNavMenuContainer } from "./styles";
 
 const getActiveLinkStyles = ({ isActive }: { isActive: boolean }) => ({
@@ -44,11 +45,7 @@ const Header = () => {
               Sign in
             </NavLink>
           </li>
-          <li>
-            <NavLink style={getActiveLinkStyles} to="/aa">
-              Signout
-            </NavLink>
-          </li>
+          <SignoutNavItem />
         </StyledNavMenuContainer>
       </StyledHeaderContainer>
     </>
