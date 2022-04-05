@@ -1,12 +1,12 @@
 // TODO: better type annotations
 
-export const authenticate = (data: any, next: any) => {
-  localStorage.setItem("jwt", JSON.stringify(data));
-  next();
-};
+// export const authenticate = (data: any, next: any) => {
+//   localStorage.setItem("jwt", JSON.stringify(data));
+//   next();
+// };
 
 export const getJwtfromLocalstorage = () =>
-  typeof localStorage.getItem("jwt") === "string"
+  localStorage.getItem("jwt")
     ? JSON.parse(localStorage.getItem("jwt") as string)
     : null;
 

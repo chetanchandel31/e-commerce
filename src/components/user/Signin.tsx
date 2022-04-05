@@ -1,9 +1,9 @@
 import useEndpoint from "api/useEndpoint";
-import { authenticate, getJwtfromLocalstorage } from "auth/helper";
 import Layout from "components/core/Layout";
 import { Button, IconButton, Input, Text, useTheme } from "haki-ui";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { AiOutlineMail } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
 import { eyeIcon } from "./helper/eyeIcon";
 import { StyledAuthForm } from "./styles";
 import { SigninReqBody, SigninResponse } from "./types";
@@ -18,6 +18,8 @@ const Signin = () => {
   const theme = useTheme();
   const iconColor = theme.colors.disabled.dark;
 
+  const navigate = useNavigate();
+
   const signinEndpointState = useEndpoint<SigninReqBody, SigninResponse>({
     endpoint: "/signin",
     method: "POST",
@@ -30,24 +32,17 @@ const Signin = () => {
   const handleChange = ({ target }: ChangeEvent<HTMLInputElement>) =>
     setSigninData((prev) => ({ ...prev, [target.name]: target.value }));
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const data = await makeRequest({ email, password });
-    authenticate(data, () => setSigninData(signinDataInitialState)); // TODO: remove next()
+    makeRequest({ email, password });
   };
-
-  const performRedirect = (didRedirect: boolean) => {
-    if (didRedirect) {
-      // if user.role === 1 // redirect to admin dashboard
-      // else // redirect to user dashboard
-    }
-  };
-
-  const jwtFromLocalstorage = getJwtfromLocalstorage();
 
   useEffect(() => {
     if (result !== null && !error) {
-      // performRedirect()
+      localStorage.setItem("jwt", JSON.stringify(result));
+      setSigninData(signinDataInitialState);
+      // TODO: conditionally redirect based on role
+      navigate("/");
     }
   }, [result, error]);
 

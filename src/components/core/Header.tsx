@@ -1,3 +1,4 @@
+import { getJwtfromLocalstorage } from "auth/helper";
 import { useTheme } from "haki-ui";
 import { NavLink } from "react-router-dom";
 import SignoutNavItem from "./SignoutNavItem";
@@ -35,17 +36,22 @@ const Header = () => {
               A.Dashboard
             </NavLink>
           </li>
-          <li>
-            <NavLink style={getActiveLinkStyles} to="/signup">
-              Signup
-            </NavLink>
-          </li>
-          <li>
-            <NavLink style={getActiveLinkStyles} to="/signin">
-              Sign in
-            </NavLink>
-          </li>
-          <SignoutNavItem />
+          {getJwtfromLocalstorage() === null ? (
+            <>
+              <li>
+                <NavLink style={getActiveLinkStyles} to="/signup">
+                  Signup
+                </NavLink>
+              </li>
+              <li>
+                <NavLink style={getActiveLinkStyles} to="/signin">
+                  Sign in
+                </NavLink>
+              </li>
+            </>
+          ) : (
+            <SignoutNavItem />
+          )}
         </StyledNavMenuContainer>
       </StyledHeaderContainer>
     </>
