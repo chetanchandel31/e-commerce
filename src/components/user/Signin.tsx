@@ -41,8 +41,13 @@ const Signin = () => {
     if (result !== null && !error) {
       localStorage.setItem("jwt", JSON.stringify(result));
       setSigninData(signinDataInitialState);
-      // TODO: conditionally redirect based on role
-      navigate("/");
+
+      // conditionally redirect based on role
+      if (result?.user.role === 1) {
+        navigate("/admin/dashboard");
+      } else {
+        navigate("/user/dashboard");
+      }
     }
   }, [result, error]);
 
