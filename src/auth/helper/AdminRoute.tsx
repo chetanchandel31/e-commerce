@@ -3,16 +3,16 @@ import { Navigate } from "react-router-dom";
 import { getJwtfromLocalstorage } from ".";
 
 type AdminRouteProps = {
-  route: ReactNode;
+  children: ReactNode;
 };
 
-const AdminRoutes = ({ route }: AdminRouteProps) => {
+const AdminRoute = ({ children }: AdminRouteProps) => {
   // TODO: redirect somewhere more sensible than "/signin"
   return (
     <>
       {getJwtfromLocalstorage() !== null &&
       getJwtfromLocalstorage()?.user?.role === 1 ? (
-        route
+        children
       ) : (
         <Navigate replace to="/signin" />
       )}
@@ -20,4 +20,4 @@ const AdminRoutes = ({ route }: AdminRouteProps) => {
   );
 };
 
-export default AdminRoutes;
+export default AdminRoute;

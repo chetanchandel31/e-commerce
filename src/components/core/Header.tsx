@@ -27,12 +27,12 @@ const Header = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink style={getActiveLinkStyles} to="/aa">
+            <NavLink style={getActiveLinkStyles} to="/user/dashboard">
               Dashboard
             </NavLink>
           </li>
           <li>
-            <NavLink style={getActiveLinkStyles} to="/aa">
+            <NavLink style={getActiveLinkStyles} to="/admin/dashboard">
               A.Dashboard
             </NavLink>
           </li>

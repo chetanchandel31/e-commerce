@@ -3,14 +3,14 @@ import { Navigate } from "react-router-dom";
 import { getJwtfromLocalstorage } from ".";
 
 type PrivateRouteProps = {
-  route: ReactNode;
+  children: ReactNode;
 };
 
-const PrivateRoutes = ({ route }: PrivateRouteProps) => {
+const PrivateRoute = ({ children }: PrivateRouteProps) => {
   return (
     <>
       {getJwtfromLocalstorage() !== null ? (
-        route
+        children
       ) : (
         <Navigate replace to="/signin" />
       )}
@@ -18,4 +18,4 @@ const PrivateRoutes = ({ route }: PrivateRouteProps) => {
   );
 };
 
-export default PrivateRoutes;
+export default PrivateRoute;
