@@ -6,14 +6,12 @@ type LayoutProps = {
   children: ReactNode;
 };
 
-const Layout = ({ children }: LayoutProps) => {
-  return (
-    <>
-      <Header />
-      <Container>{children}</Container>
-      <footer>footer</footer>
-    </>
-  );
-};
+const Layout = ({ children }: LayoutProps) => (
+  <>
+    <Header />
+    <Container>{children}</Container>
+    <footer>footer</footer>
+  </>
+);
 
 export default Layout;

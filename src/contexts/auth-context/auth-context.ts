@@ -3,6 +3,7 @@ import { UserInfo } from "shared-types";
 
 type AuthContextInterface = {
   setUserInfo: Dispatch<SetStateAction<UserInfo | null>>;
+  // eslint-disable-next-line no-unused-vars
   signIn: (userInfo: UserInfo) => void;
   signOut: () => void;
   userInfo: UserInfo | null;

@@ -34,6 +34,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
+    // problem: whenever component renders, value object will change and context will run unnecessarily
+    // justification: this component can only re-render when `userInfo` changes and we *want* context to re-render in such case
+    // eslint-disable-next-line react/jsx-no-constructed-context-values
     <AuthContext.Provider value={{ setUserInfo, signIn, signOut, userInfo }}>
       {children}
     </AuthContext.Provider>

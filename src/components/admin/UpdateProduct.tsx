@@ -1,7 +1,3 @@
-import React from "react";
-
-const UpdateProduct = () => {
-  return <div>UpdateProduct</div>;
-};
+const UpdateProduct = () => <div>UpdateProduct</div>;
 
 export default UpdateProduct;

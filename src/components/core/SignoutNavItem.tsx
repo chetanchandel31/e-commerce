@@ -17,6 +17,7 @@ const SignoutNavItem = () => {
     const signOutResult = await makeRequest(undefined);
 
     if (signOutResult.type === "success") signOut();
+    // eslint-disable-next-line no-alert
     else alert("signout failed");
   };
 
@@ -32,10 +33,14 @@ const SignoutNavItem = () => {
           thickness={2}
         />
       )}
+      {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
       <span
         className="nav-link"
         onClick={handleSignout}
+        onKeyDown={(e) => e.key === "enter" && handleSignout()}
+        role="button"
         style={isLoading ? { color: "#b7b7b7" } : {}}
+        tabIndex={0}
       >
         Signout
       </span>

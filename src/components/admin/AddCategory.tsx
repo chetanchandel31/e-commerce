@@ -1,5 +1,3 @@
-const AddCategory = () => {
-  return <div>AddCategory</div>;
-};
+const AddCategory = () => <div>AddCategory</div>;
 
 export default AddCategory;

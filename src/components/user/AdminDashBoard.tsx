@@ -1,7 +1,5 @@
 import Layout from "components/core/Layout";
 
-const AdminDashBoard = () => {
-  return <Layout>AdminDashBoard</Layout>;
-};
+const AdminDashBoard = () => <Layout>AdminDashBoard</Layout>;
 
 export default AdminDashBoard;
