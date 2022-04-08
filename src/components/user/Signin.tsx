@@ -1,9 +1,9 @@
 import useEndpoint from "api/useEndpoint";
 import Layout from "components/core/Layout";
+import { useAuth } from "contexts/auth-context";
 import { Button, IconButton, Input, Text, useTheme } from "haki-ui";
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import { AiOutlineMail } from "react-icons/ai";
-import { useNavigate } from "react-router-dom";
 import { eyeIcon } from "./helper/eyeIcon";
 import { StyledAuthForm } from "./styles";
 import { SigninReqBody, SigninResponse } from "./types";
@@ -18,13 +18,13 @@ const Signin = () => {
   const theme = useTheme();
   const iconColor = theme.colors.disabled.dark;
 
-  const navigate = useNavigate();
+  const { signIn } = useAuth();
 
   const signinEndpointState = useEndpoint<SigninReqBody, SigninResponse>({
     endpoint: "/signin",
     method: "POST",
   });
-  const { error, isLoading, makeRequest, result } = signinEndpointState;
+  const { error, isLoading, makeRequest } = signinEndpointState;
 
   const [signinData, setSigninData] = useState(signinDataInitialState);
   const { email, password, doShowPassword } = signinData;
@@ -32,24 +32,12 @@ const Signin = () => {
   const handleChange = ({ target }: ChangeEvent<HTMLInputElement>) =>
     setSigninData((prev) => ({ ...prev, [target.name]: target.value }));
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    makeRequest({ email, password });
+    const signinResult = await makeRequest({ email, password });
+
+    if (signinResult.type === "success") signIn(signinResult.data);
   };
-
-  useEffect(() => {
-    if (result !== null && !error) {
-      localStorage.setItem("jwt", JSON.stringify(result));
-      setSigninData(signinDataInitialState);
-
-      // conditionally redirect based on role
-      if (result?.user.role === 1) {
-        navigate("/admin/dashboard");
-      } else {
-        navigate("/user/dashboard");
-      }
-    }
-  }, [result, error]);
 
   const doDisableSignin = !email || !password;
 

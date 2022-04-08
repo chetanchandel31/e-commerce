@@ -15,6 +15,11 @@ type Args =
       fetchOnFirstRender?: false;
     };
 
+type MakeRequestReturnType = {
+  data: any;
+  type: "success" | "error";
+};
+
 const useEndpoint = <RequestBody, Response>(args: Args) => {
   const { endpoint, method = "GET" } = args;
 
@@ -27,7 +32,9 @@ const useEndpoint = <RequestBody, Response>(args: Args) => {
   // TODO: can add logic for optimal updates (POST, PUT and DELETE) here only?
   // TODO: something to add token to headers
 
-  const makeRequest = async (reqBody: RequestBody) => {
+  const makeRequest = async (
+    reqBody: RequestBody
+  ): Promise<MakeRequestReturnType> => {
     setIsLoading(true);
     setError(null);
 
@@ -35,7 +42,7 @@ const useEndpoint = <RequestBody, Response>(args: Args) => {
       const res = await API({ url: endpoint, method, data: reqBody });
       setResult(res.data as Response);
 
-      return res.data as Response;
+      return { data: res.data as Response, type: "success" };
     } catch (error: any) {
       console.log(error, `${method} request to ${endpoint} failed`);
 
@@ -43,7 +50,7 @@ const useEndpoint = <RequestBody, Response>(args: Args) => {
         error?.response?.data?.error ||
           "network request failed, please check console"
       );
-      return error?.response?.data;
+      return { data: error?.response?.data, type: "error" };
       // TODO: we don't reset `result` when request fails but maybe should have an option to do so
     } finally {
       setIsLoading(false);

@@ -1,13 +1,10 @@
-import AppRoutes from "./Routes";
-import ReactDOM from "react-dom";
 import { HakiProvider } from "haki-ui";
-import { AuthProvider } from "contexts/auth-context";
+import ReactDOM from "react-dom";
+import AppRoutes from "./Routes";
 
 ReactDOM.render(
   <HakiProvider>
-    <AuthProvider>
-      <AppRoutes />
-    </AuthProvider>
+    <AppRoutes />
   </HakiProvider>,
   document.getElementById("root")
 );

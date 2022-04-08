@@ -1,4 +1,4 @@
-import { getJwtfromLocalstorage } from "auth/helper";
+import { useAuth } from "contexts/auth-context";
 import { useTheme } from "haki-ui";
 import { NavLink } from "react-router-dom";
 import SignoutNavItem from "./SignoutNavItem";
@@ -10,6 +10,7 @@ const getActiveLinkStyles = ({ isActive }: { isActive: boolean }) => ({
 
 const Header = () => {
   const theme = useTheme();
+  const { userInfo } = useAuth();
 
   return (
     <>
@@ -36,7 +37,7 @@ const Header = () => {
               A.Dashboard
             </NavLink>
           </li>
-          {getJwtfromLocalstorage() === null ? (
+          {userInfo === null ? (
             <>
               <li>
                 <NavLink style={getActiveLinkStyles} to="/signup">

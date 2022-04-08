@@ -1,25 +1,24 @@
 import useEndpoint from "api/useEndpoint";
+import { useAuth } from "contexts/auth-context";
 import { CircularProgress, useTheme } from "haki-ui";
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 
 const SignoutNavItem = () => {
   const theme = useTheme();
-  const navigate = useNavigate();
+  const { signOut } = useAuth();
 
-  const { error, isLoading, makeRequest, result } = useEndpoint({
+  const { isLoading, makeRequest } = useEndpoint<
+    undefined,
+    { message: string }
+  >({
     endpoint: "/signout",
   });
 
-  useEffect(() => {
-    if (result !== null && !error) {
-      localStorage.removeItem("jwt");
-      navigate("/");
-    }
-    if (error) {
-      alert("signout failed :(");
-    }
-  }, [result, error]);
+  const handleSignout = async () => {
+    const signOutResult = await makeRequest(undefined);
+
+    if (signOutResult.type === "success") signOut();
+    else alert("signout failed");
+  };
 
   return (
     <li className="signout-nav-item">
@@ -35,7 +34,7 @@ const SignoutNavItem = () => {
       )}
       <span
         className="nav-link"
-        onClick={() => makeRequest(undefined)}
+        onClick={handleSignout}
         style={isLoading ? { color: "#b7b7b7" } : {}}
       >
         Signout

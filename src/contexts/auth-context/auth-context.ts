@@ -1,11 +1,19 @@
-import { createContext } from "react";
+import { createContext, Dispatch, SetStateAction } from "react";
 import { UserInfo } from "shared-types";
 
-export const AuthContext = createContext<{
+type AuthContextInterface = {
+  setUserInfo: Dispatch<SetStateAction<UserInfo | null>>;
+  signIn: (userInfo: UserInfo) => void;
+  signOut: () => void;
   userInfo: UserInfo | null;
-  setUserInfo: React.Dispatch<React.SetStateAction<UserInfo | null>>;
-}>({
-  setUserInfo: () =>
-    console.warn("maybe the component isn't wrapped with auth-context"),
+};
+
+const logWarning = () =>
+  console.warn("maybe the component isn't wrapped with auth-context");
+
+export const AuthContext = createContext<AuthContextInterface>({
+  setUserInfo: logWarning,
+  signIn: logWarning,
+  signOut: logWarning,
   userInfo: null,
 });
