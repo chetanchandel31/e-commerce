@@ -1,20 +1,16 @@
+import { useAuth } from "contexts/auth-context";
 import { ReactNode } from "react";
 import { Navigate } from "react-router-dom";
-import { getJwtfromLocalstorage } from ".";
 
 type PrivateRouteProps = {
   children: ReactNode;
 };
 
 const PrivateRoute = ({ children }: PrivateRouteProps) => {
+  const { userInfo } = useAuth();
+
   return (
-    <>
-      {getJwtfromLocalstorage() !== null ? (
-        children
-      ) : (
-        <Navigate replace to="/signin" />
-      )}
-    </>
+    <>{userInfo !== null ? children : <Navigate replace to="/signin" />}</>
   );
 };
 
