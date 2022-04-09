@@ -44,6 +44,7 @@
     "operator-linebreak": "off",
     "implicit-arrow-linebreak": "off",
     "react/jsx-wrap-multilines": "off",
+    "no-confusing-arrow": 0,
     "react/jsx-one-expression-per-line": "off"
   },
   "settings": {
