@@ -31,11 +31,13 @@ const Header = () => {
             Dashboard
           </NavLink>
         </li>
-        <li>
-          <NavLink style={getActiveLinkStyles} to="/admin/dashboard">
-            A.Dashboard
-          </NavLink>
-        </li>
+        {userInfo?.user.role === 1 && (
+          <li>
+            <NavLink style={getActiveLinkStyles} to="/admin/dashboard">
+              A.Dashboard
+            </NavLink>
+          </li>
+        )}
         {userInfo === null ? (
           <>
             <li>
