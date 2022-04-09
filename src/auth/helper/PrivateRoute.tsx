@@ -10,6 +10,8 @@ const PrivateRoute = ({ children }: PrivateRouteProps) => {
   const { userInfo } = useAuth();
 
   return (
+    // w/o redirect it'd cause an error inside <Routes></Routes>
+    // eslint-disable-next-line react/jsx-no-useless-fragment
     <>{userInfo !== null ? children : <Navigate replace to="/signin" />}</>
   );
 };

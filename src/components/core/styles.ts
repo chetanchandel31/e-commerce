@@ -34,6 +34,7 @@ export const Container = styled.div`
   width: 100%;
   max-width: 62rem;
   margin: auto;
+  padding: 0 8px;
 
   flex-grow: 1;
 `;

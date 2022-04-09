@@ -11,6 +11,8 @@ const AdminRoute = ({ children }: AdminRouteProps) => {
   // TODO: redirect somewhere more sensible than "/signin"
 
   return (
+    // w/o redirect it'd cause an error inside <Routes></Routes>
+    // eslint-disable-next-line react/jsx-no-useless-fragment
     <>
       {userInfo !== null && userInfo.user.role === 1 ? (
         children
