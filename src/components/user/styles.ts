@@ -20,4 +20,16 @@ export const AdminNavbar = styled.div`
   padding: 0.5rem 0;
   border-bottom: solid 1px rgba(0, 0, 0, 0.26);
   text-align: center;
+  display: flex;
+  overflow: auto;
+`;
+
+export const AdminProfileContainer = styled.div`
+  padding: 2rem;
+  display: flex;
+  justify-content: space-around;
+
+  @media (max-width: 40em) {
+    flex-direction: column;
+  }
 `;

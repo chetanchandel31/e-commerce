@@ -19,4 +19,4 @@ export const adminNavItems = [
     title: "manage orders",
     pathName: "/admin/dashboard/manage-orders",
   },
-];
+] as const;

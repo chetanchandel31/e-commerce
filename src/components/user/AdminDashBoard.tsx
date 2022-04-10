@@ -1,15 +1,18 @@
 import Layout from "components/core/Layout";
-import { Button, Card, useTheme } from "haki-ui";
+import { useAuth } from "contexts/auth-context";
+import { Button, Card, Text, useTheme } from "haki-ui";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { adminNavItems } from "./fixtures/adminNavItems";
 import { getButtonStyles, isSelected } from "./helper";
-import { AdminNavbar } from "./styles";
+import { AdminNavbar, AdminProfileContainer } from "./styles";
 
 const AdminDashBoard = () => {
   const theme = useTheme();
 
   const location = useLocation();
   const navigate = useNavigate();
+
+  const { userInfo } = useAuth();
 
   return (
     <Layout
@@ -20,6 +23,7 @@ const AdminDashBoard = () => {
         <AdminNavbar>
           {adminNavItems.map(({ pathName, title }) => (
             <Button
+              key={pathName}
               onClick={() => navigate(pathName)}
               style={getButtonStyles(isSelected(location, pathName), theme)}
               variant="ghost"
@@ -29,6 +33,23 @@ const AdminDashBoard = () => {
           ))}
         </AdminNavbar>
 
+        {location.pathname === "/admin/dashboard" && (
+          <AdminProfileContainer>
+            <div>
+              <Text as="span" weight="semi-bold">
+                name:{" "}
+              </Text>
+              <Text as="span">{userInfo?.user.name}</Text>
+            </div>
+
+            <div>
+              <Text as="span" weight="semi-bold">
+                email:{" "}
+              </Text>
+              <Text as="span">{userInfo?.user.email}</Text>
+            </div>
+          </AdminProfileContainer>
+        )}
         <Outlet />
       </Card>
     </Layout>
