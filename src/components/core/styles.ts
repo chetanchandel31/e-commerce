@@ -37,4 +37,17 @@ export const Container = styled.div`
   padding: 0 8px;
 
   flex-grow: 1;
+
+  & > h2,
+  h4 {
+    text-align: center;
+  }
+
+  & > h2 {
+    margin-top: 1rem;
+  }
+
+  & > h4 {
+    margin-bottom: 2rem;
+  }
 `;

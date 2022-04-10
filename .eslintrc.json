@@ -33,6 +33,7 @@
       }
     ],
     "no-unused-vars": 1,
+    "react/require-default-props": "off",
     // formatting stuff
     "comma-dangle": 0,
     "linebreak-style": 0,

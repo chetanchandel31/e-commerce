@@ -30,7 +30,12 @@ const AppRoutes = () => (
             </AdminRoute>
           }
           path="/admin/dashboard"
-        />
+        >
+          <Route element={<>hi create category</>} path="create-categories" />
+          <Route element={<>hi create product</>} path="create-product" />
+          <Route element={<>hi manage products</>} path="manage-products" />
+          <Route element={<>hi manage orders</>} path="manage-orders" />
+        </Route>
       </Routes>
     </AuthProvider>
   </Router>
