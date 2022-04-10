@@ -1,5 +1,6 @@
 import AdminRoute from "auth/helper/AdminRoute";
 import PrivateRoute from "auth/helper/PrivateRoute";
+import CreateCategory from "components/admin/CreateCategory";
 import Home from "components/core/Home";
 import AdminDashBoard from "components/user/AdminDashBoard";
 import Signin from "components/user/Signin";
@@ -31,7 +32,7 @@ const AppRoutes = () => (
           }
           path="/admin/dashboard"
         >
-          <Route element={<>hi create category</>} path="create-categories" />
+          <Route element={<CreateCategory />} path="create-categories" />
           <Route element={<>hi create product</>} path="create-product" />
           <Route element={<>hi manage products</>} path="manage-products" />
           <Route element={<>hi manage orders</>} path="manage-orders" />
