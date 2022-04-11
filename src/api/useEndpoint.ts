@@ -1,5 +1,6 @@
 import { API } from "api";
 import { useState } from "react";
+import { getRequestHeaders } from "./getRequestHeaders";
 
 type Args =
   | {
@@ -30,7 +31,6 @@ const useEndpoint = <RequestBody, Response>(args: Args) => {
 
   // TODO: onload
   // TODO: can add logic for optimal updates (POST, PUT and DELETE) here only?
-  // TODO: something to add token to headers
 
   const makeRequest = async (
     reqBody: RequestBody
@@ -39,7 +39,12 @@ const useEndpoint = <RequestBody, Response>(args: Args) => {
     setError(null);
 
     try {
-      const res = await API({ url: endpoint, method, data: reqBody });
+      const res = await API({
+        url: endpoint,
+        method,
+        data: reqBody,
+        headers: getRequestHeaders(), // always adds bearer token if we have it in local storage
+      });
       setResult(res.data as Response);
 
       return { data: res.data as Response, type: "success" };

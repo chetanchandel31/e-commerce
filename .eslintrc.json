@@ -46,7 +46,9 @@
     "implicit-arrow-linebreak": "off",
     "react/jsx-wrap-multilines": "off",
     "no-confusing-arrow": 0,
-    "react/jsx-one-expression-per-line": "off"
+    "react/jsx-one-expression-per-line": "off",
+    "no-underscore-dangle": "off",
+    "indent": "off"
   },
   "settings": {
     "import/resolver": {
