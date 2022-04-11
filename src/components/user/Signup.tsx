@@ -4,7 +4,7 @@ import { Alert, Button, IconButton, Input, Text, useTheme } from "haki-ui";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { AiOutlineMail, AiOutlineUser } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
-import { eyeIcon } from "./helper/eyeIcon";
+import EyeIcon from "./helper/EyeIcon";
 import { StyledAuthForm } from "./styles";
 import { SignupReqBody, SignupResponse } from "./types";
 
@@ -92,7 +92,7 @@ const Signup = () => {
           rightAdornment={
             <IconButton
               circular
-              icon={eyeIcon(doShowPassword)}
+              icon={<EyeIcon isVisible={doShowPassword} />}
               onClick={toggleShowPassword}
               size="sm"
               type="button"
@@ -113,7 +113,7 @@ const Signup = () => {
           rightAdornment={
             <IconButton
               circular
-              icon={eyeIcon(doShowReEnterPassword)}
+              icon={<EyeIcon isVisible={doShowReEnterPassword} />}
               onClick={toggleShowReEnterPassword}
               size="sm"
               type="button"

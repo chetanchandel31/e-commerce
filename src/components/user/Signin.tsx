@@ -4,7 +4,7 @@ import { useAuth } from "contexts/auth-context";
 import { Button, IconButton, Input, Text, useTheme } from "haki-ui";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { AiOutlineMail } from "react-icons/ai";
-import { eyeIcon } from "./helper/eyeIcon";
+import EyeIcon from "./helper/EyeIcon";
 import { StyledAuthForm } from "./styles";
 import { SigninReqBody, SigninResponse } from "./types";
 
@@ -69,7 +69,7 @@ const Signin = () => {
           rightAdornment={
             <IconButton
               circular
-              icon={eyeIcon(doShowPassword)}
+              icon={<EyeIcon isVisible={doShowPassword} />}
               onClick={toggleShowPassword}
               size="sm"
               type="button"
