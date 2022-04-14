@@ -1,19 +1,19 @@
 import { API } from "api";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getRequestHeaders } from "./getRequestHeaders";
 
 type Args =
   | {
       endpoint: string;
       method?: "GET";
-      /** allowed only for `GET` method */
-      fetchOnFirstRender?: boolean;
+      /** network request will be made as soon as component loads. allowed only for `GET` method. */
+      preLoadResult?: boolean;
     }
   | {
       endpoint: string;
       method?: "POST" | "PUT" | "DELETE";
-      /** allowed only for `GET` method */
-      fetchOnFirstRender?: false;
+      /** network request will be made as soon as component loads. allowed only for `GET` method. */
+      preLoadResult?: false;
     };
 
 type MakeRequestReturnType = {
@@ -22,14 +22,13 @@ type MakeRequestReturnType = {
 };
 
 const useEndpoint = <RequestBody, Response>(args: Args) => {
-  const { endpoint, method = "GET" } = args;
+  const { endpoint, method = "GET", preLoadResult } = args;
 
   // `RESULT` WILL BE TRUTHY ONLY IF REQUEST SUCCEEDS, A FAILED REQUEST'S RESPONSE GOES TO `ERROR` AND NOT TO `RESULT`
   const [result, setResult] = useState<Response | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // TODO: onload
   // TODO: can add logic for optimal updates (POST, PUT and DELETE) here only?
 
   const makeRequest = async (
@@ -61,6 +60,10 @@ const useEndpoint = <RequestBody, Response>(args: Args) => {
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (preLoadResult) makeRequest(undefined as unknown as RequestBody);
+  }, []);
 
   return { error, isLoading, makeRequest, result };
 };

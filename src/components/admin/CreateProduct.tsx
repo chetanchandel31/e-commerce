@@ -1,5 +1,8 @@
-import { Input, Select } from "haki-ui";
+import { Input } from "haki-ui";
 import { ChangeEvent, FormEvent, useState } from "react";
+import { isInputTypeFile } from "./helper/isInputTypeFile";
+import SelectCategory from "./helper/SelectCategory";
+import { StyledCreateProductForm } from "./styles";
 
 type CreateProductDataInitialState = {
   name: string;
@@ -23,11 +26,6 @@ const CreateProduct = () => {
   const [createProductData, setCreateProductData] = useState(
     createProductDataInitialState
   );
-
-  // type narrowing 🙀
-  const isInputTypeFile = (
-    target: EventTarget & (HTMLInputElement | HTMLSelectElement)
-  ): target is EventTarget & HTMLInputElement => target.name === "photo";
 
   const handleChange = ({
     target,
@@ -55,15 +53,7 @@ const CreateProduct = () => {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        gap: "1rem",
-        padding: "2rem 1rem",
-      }}
-    >
+    <StyledCreateProductForm onSubmit={handleSubmit}>
       <Input name="name" onChange={handleChange} placeholder="name" required />
       <Input
         name="description"
@@ -78,9 +68,7 @@ const CreateProduct = () => {
         required
         type="number"
       />
-      <Select fullWidth name="category" onChange={handleChange} required>
-        <option>hi</option>
-      </Select>
+      <SelectCategory handleChange={handleChange} />
       <Input
         name="stock"
         onChange={handleChange}
@@ -105,7 +93,7 @@ const CreateProduct = () => {
       {/* hi */}
       {/* </Button> */}
       <button type="submit">submit</button>
-    </form>
+    </StyledCreateProductForm>
   );
 };
 
