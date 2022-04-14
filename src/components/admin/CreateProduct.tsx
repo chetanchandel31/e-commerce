@@ -1,12 +1,22 @@
 import { Input, Select } from "haki-ui";
 import { ChangeEvent, FormEvent, useState } from "react";
 
-const createProductDataInitialState = {
+type CreateProductDataInitialState = {
+  name: string;
+  description: string;
+  price: string;
+  category: string;
+  stock: string;
+  photo: File | null;
+};
+
+const createProductDataInitialState: CreateProductDataInitialState = {
   name: "",
   description: "",
   price: "",
   category: "",
   stock: "",
+  photo: null,
 };
 
 const CreateProduct = () => {
@@ -14,30 +24,34 @@ const CreateProduct = () => {
     createProductDataInitialState
   );
 
-  console.log(createProductData);
+  // type narrowing 🙀
+  const isInputTypeFile = (
+    target: EventTarget & (HTMLInputElement | HTMLSelectElement)
+  ): target is EventTarget & HTMLInputElement => target.name === "photo";
 
   const handleChange = ({
     target,
   }: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    setCreateProductData((prev) => ({
-      ...prev,
-      [target.name]: target.value,
-    }));
+    if (isInputTypeFile(target)) {
+      setCreateProductData((prev) => ({
+        ...prev,
+        photo: target.files && target.files[0],
+      }));
+    } else {
+      setCreateProductData((prev) => ({
+        ...prev,
+        [target.name]: target.value,
+      }));
+    }
   };
-  // console.log(createProductData.get("name"), "hi");
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData();
-    Object.keys(createProductData).forEach((key) =>
-      formData.set(key, (createProductData as any)[key])
-    );
 
-    console.log(
-      formData.get("name"),
-      formData.get("description"),
-      formData.get("stock")
-    );
+    Object.entries(createProductData).forEach(([key, value]) => {
+      if (value) formData.set(key, value);
+    });
   };
 
   return (
@@ -74,7 +88,12 @@ const CreateProduct = () => {
         required
         type="number"
       />
-      <input style={{ border: "solid 2px black" }} type="file" />
+      <input
+        name="photo"
+        onChange={handleChange}
+        style={{ border: "solid 2px black" }}
+        type="file"
+      />
       <button
         name="haha"
         onClick={(e) => console.log((e.target as HTMLButtonElement).name)}
