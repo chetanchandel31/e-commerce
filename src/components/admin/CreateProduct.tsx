@@ -1,5 +1,6 @@
-import { Input } from "haki-ui";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { Button, Input, Text } from "haki-ui";
+import { ChangeEvent, FormEvent, useRef, useState } from "react";
+import { BiImageAdd } from "react-icons/bi";
 import { isInputTypeFile } from "./helper/isInputTypeFile";
 import SelectCategory from "./helper/SelectCategory";
 import { StyledCreateProductForm } from "./styles";
@@ -26,6 +27,8 @@ const CreateProduct = () => {
   const [createProductData, setCreateProductData] = useState(
     createProductDataInitialState
   );
+
+  const imageUploadBtnRef = useRef<HTMLInputElement>(null);
 
   const handleChange = ({
     target,
@@ -54,14 +57,22 @@ const CreateProduct = () => {
 
   return (
     <StyledCreateProductForm onSubmit={handleSubmit}>
-      <Input name="name" onChange={handleChange} placeholder="name" required />
       <Input
+        fullWidth
+        name="name"
+        onChange={handleChange}
+        placeholder="name"
+        required
+      />
+      <Input
+        fullWidth
         name="description"
         onChange={handleChange}
         placeholder="description"
         required
       />
       <Input
+        fullWidth
         name="price"
         onChange={handleChange}
         placeholder="price"
@@ -70,29 +81,41 @@ const CreateProduct = () => {
       />
       <SelectCategory handleChange={handleChange} />
       <Input
+        fullWidth
         name="stock"
         onChange={handleChange}
         placeholder="stock"
         required
         type="number"
       />
+
+      <div>
+        <Button
+          onClick={() => imageUploadBtnRef.current?.click()}
+          startIcon={<BiImageAdd />}
+          type="button"
+          variant="outlined"
+        >
+          Add image
+        </Button>
+
+        {createProductData.photo && (
+          <Text as="span" color="secondary" style={{ marginLeft: "1rem" }}>
+            {createProductData.photo?.name}
+          </Text>
+        )}
+      </div>
       <input
         name="photo"
         onChange={handleChange}
-        style={{ border: "solid 2px black" }}
+        ref={imageUploadBtnRef}
+        style={{ display: "none" }}
         type="file"
       />
-      <button
-        name="haha"
-        onClick={(e) => console.log((e.target as HTMLButtonElement).name)}
-        type="button"
-      >
-        aa
-      </button>
-      {/* <Button onClick={({ target }) => console.log(target.name)} type="button"> */}
-      {/* hi */}
-      {/* </Button> */}
-      <button type="submit">submit</button>
+
+      <Button fullWidth type="submit">
+        submit
+      </Button>
     </StyledCreateProductForm>
   );
 };

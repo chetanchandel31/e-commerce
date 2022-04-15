@@ -11,6 +11,7 @@ export const StyledCreateCategoryForm = styled.form`
 export const StyledCreateProductForm = styled.form`
   display: flex;
   flex-direction: column;
+  align-items: start;
   gap: 1rem;
   padding: 2rem 1rem;
 `;
