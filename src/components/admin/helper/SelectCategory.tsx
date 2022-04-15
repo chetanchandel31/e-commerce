@@ -20,7 +20,7 @@ const SelectCategory = ({ handleChange }: SelectCategoryProps) => {
     <>
       <Select fullWidth name="category" onChange={handleChange} required>
         {result?.map(({ _id, name }) => (
-          <option key={_id} value={name}>
+          <option key={_id} value={_id}>
             {name}
           </option>
         ))}

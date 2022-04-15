@@ -1,18 +1,14 @@
+import useEndpoint from "api/useEndpoint";
+import { useAuth } from "contexts/auth-context";
 import { Button, Input, Text } from "haki-ui";
 import { ChangeEvent, FormEvent, useRef, useState } from "react";
 import { BiImageAdd } from "react-icons/bi";
+import { useNavigate } from "react-router-dom";
+import { Product } from "shared-types";
 import { isInputTypeFile } from "./helper/isInputTypeFile";
 import SelectCategory from "./helper/SelectCategory";
 import { StyledCreateProductForm } from "./styles";
-
-type CreateProductDataInitialState = {
-  name: string;
-  description: string;
-  price: string;
-  category: string;
-  stock: string;
-  photo: File | null;
-};
+import { CreateProductDataInitialState } from "./types";
 
 const createProductDataInitialState: CreateProductDataInitialState = {
   name: "",
@@ -24,6 +20,18 @@ const createProductDataInitialState: CreateProductDataInitialState = {
 };
 
 const CreateProduct = () => {
+  const navigate = useNavigate();
+
+  const { userInfo } = useAuth();
+
+  const { error, isLoading, makeRequest, result } = useEndpoint<
+    FormData,
+    Product
+  >({
+    endpoint: `/product/create/${userInfo?.user._id}`,
+    method: "POST",
+  });
+
   const [createProductData, setCreateProductData] = useState(
     createProductDataInitialState
   );
@@ -46,13 +54,21 @@ const CreateProduct = () => {
     }
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData();
 
     Object.entries(createProductData).forEach(([key, value]) => {
       if (value) formData.set(key, value);
     });
+
+    const res = await makeRequest(formData);
+
+    if (res.type === "success") {
+      setCreateProductData(createProductDataInitialState);
+      // TODO: navigate somewhere more sensible
+      setTimeout(() => navigate("/"), 2000);
+    }
   };
 
   return (
@@ -64,6 +80,7 @@ const CreateProduct = () => {
         placeholder="name"
         required
       />
+
       <Input
         fullWidth
         name="description"
@@ -71,6 +88,7 @@ const CreateProduct = () => {
         placeholder="description"
         required
       />
+
       <Input
         fullWidth
         name="price"
@@ -79,7 +97,9 @@ const CreateProduct = () => {
         required
         type="number"
       />
+
       <SelectCategory handleChange={handleChange} />
+
       <Input
         fullWidth
         name="stock"
@@ -92,6 +112,7 @@ const CreateProduct = () => {
       <div>
         <Button
           onClick={() => imageUploadBtnRef.current?.click()}
+          size="sm"
           startIcon={<BiImageAdd />}
           type="button"
           variant="outlined"
@@ -100,7 +121,12 @@ const CreateProduct = () => {
         </Button>
 
         {createProductData.photo && (
-          <Text as="span" color="secondary" style={{ marginLeft: "1rem" }}>
+          <Text
+            as="span"
+            color="secondary"
+            style={{ marginLeft: "1rem" }}
+            variant="caption"
+          >
             {createProductData.photo?.name}
           </Text>
         )}
@@ -113,8 +139,17 @@ const CreateProduct = () => {
         type="file"
       />
 
-      <Button fullWidth type="submit">
-        submit
+      {error && (
+        <Text color="danger" variant="caption">
+          {error}
+        </Text>
+      )}
+      {result && (
+        <Text color="secondary">new product created : {result.name}</Text>
+      )}
+
+      <Button fullWidth isLoading={isLoading} type="submit">
+        create product 🚀
       </Button>
     </StyledCreateProductForm>
   );

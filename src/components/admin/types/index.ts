@@ -5,3 +5,12 @@ export type CreateCategoryResponse = {
   updatedAt: string;
   _id: string;
 };
+
+export type CreateProductDataInitialState = {
+  name: string;
+  description: string;
+  price: string;
+  category: string;
+  stock: string;
+  photo: File | null;
+};
