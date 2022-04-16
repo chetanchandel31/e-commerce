@@ -27,13 +27,13 @@ const Header = () => {
           </NavLink>
         </li>
         <li>
-          <NavLink style={getActiveLinkStyles} to="/user/dashboard">
+          <NavLink style={getActiveLinkStyles} to="/user-dashboard">
             Dashboard
           </NavLink>
         </li>
         {userInfo?.user.role === 1 && (
           <li>
-            <NavLink style={getActiveLinkStyles} to="/admin/dashboard">
+            <NavLink style={getActiveLinkStyles} to="/admin-dashboard">
               A.Dashboard
             </NavLink>
           </li>

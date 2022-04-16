@@ -2,6 +2,8 @@ import AdminRoute from "auth/helper/AdminRoute";
 import PrivateRoute from "auth/helper/PrivateRoute";
 import CreateCategory from "components/admin/CreateCategory";
 import CreateProduct from "components/admin/CreateProduct";
+import EditProduct from "components/admin/EditProduct";
+import ManageProducts from "components/admin/ManageProducts";
 import Home from "components/core/Home";
 import AdminDashBoard from "components/user/AdminDashBoard";
 import Signin from "components/user/Signin";
@@ -15,27 +17,33 @@ const AppRoutes = () => (
     <AuthProvider>
       <Routes>
         <Route path="/" element={<Home />} />
+
         <Route path="/signup" element={<Signup />} />
+
         <Route path="/signin" element={<Signin />} />
+
         <Route
           element={
             <PrivateRoute>
               <UserDashBoard />
             </PrivateRoute>
           }
-          path="/user/dashboard"
+          path="/user-dashboard"
         />
+
         <Route
           element={
             <AdminRoute>
               <AdminDashBoard />
             </AdminRoute>
           }
-          path="/admin/dashboard"
+          path="/admin-dashboard"
         >
           <Route element={<CreateCategory />} path="create-categories" />
           <Route element={<CreateProduct />} path="create-product" />
-          <Route element={<>hi manage products</>} path="manage-products" />
+          <Route element={<ManageProducts />} path="manage-products">
+            <Route element={<EditProduct />} path=":productId" />
+          </Route>
           <Route element={<>hi manage orders</>} path="manage-orders" />
         </Route>
       </Routes>

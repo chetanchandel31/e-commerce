@@ -33,7 +33,7 @@ const AdminDashBoard = () => {
           ))}
         </AdminNavbar>
 
-        {location.pathname === "/admin/dashboard" && (
+        {location.pathname === "/admin-dashboard" && (
           <AdminProfileContainer>
             <div>
               <Text as="span" weight="semi-bold">

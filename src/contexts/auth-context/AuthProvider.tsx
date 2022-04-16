@@ -23,8 +23,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setUserInfo(userInfo);
     localStorage.setItem("jwt", JSON.stringify(userInfo));
 
-    if (userInfo.user.role === 1) navigate("/admin/dashboard");
-    else navigate("/user/dashboard");
+    if (userInfo.user.role === 1) navigate("/admin-dashboard");
+    else navigate("/user-dashboard");
   };
 
   const signOut = () => {
