@@ -24,13 +24,11 @@ const CreateProduct = () => {
 
   const { userInfo } = useAuth();
 
-  const { error, isLoading, makeRequest, result } = useEndpoint<
-    FormData,
-    Product
-  >({
+  const createProductEndpointState = useEndpoint<FormData, Product>({
     endpoint: `/product/create/${userInfo?.user._id}`,
     method: "POST",
   });
+  const { error, isLoading, makeRequest, result } = createProductEndpointState;
 
   const [createProductData, setCreateProductData] = useState(
     createProductDataInitialState
