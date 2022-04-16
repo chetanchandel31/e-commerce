@@ -14,3 +14,11 @@ export type CreateProductDataInitialState = {
   stock: string;
   photo: File | null;
 };
+
+export type EditProductDataInitialState = {
+  name: string;
+  description: string;
+  price: string;
+  category: string;
+  stock: string;
+};

@@ -23,6 +23,7 @@ const SelectCategory = ({ handleChange, value }: SelectCategoryProps) => {
         fullWidth
         name="category"
         onChange={handleChange}
+        placeholder="pick a category"
         required
         value={value}
       >

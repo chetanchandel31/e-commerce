@@ -18,7 +18,7 @@ export type Category = {
 };
 
 export type Product = {
-  category: string;
+  category: Category;
   createdAt: string;
   description: string;
   name: string;
@@ -31,6 +31,7 @@ export type Product = {
   };
   price: number;
   sold: number;
+  stock: number;
   updatedAt: string;
   _id: string;
 };

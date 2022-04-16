@@ -39,3 +39,27 @@ export const StyledManageProductsContainer = styled.div`
     gap: 1rem;
   }
 `;
+
+export const StyledEditProductForm = styled.form`
+  padding: 2rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  & .edit-form-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  & .edit-form-item-name {
+    width: 110px;
+  }
+`;
+
+export const StyledEditFormBottomBtnsContainer = styled.div`
+  display: flex;
+  justify-content: end;
+  width: 100%;
+  gap: 0.5rem;
+`;
