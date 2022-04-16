@@ -26,7 +26,7 @@ const useEndpoint = <RequestBody, Response>(args: Args) => {
 
   // `RESULT` WILL BE TRUTHY ONLY IF REQUEST SUCCEEDS, A FAILED REQUEST'S RESPONSE GOES TO `ERROR` AND NOT TO `RESULT`
   const [result, setResult] = useState<Response | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(preLoadResult); // in case of pre-load we start with loading state
   const [error, setError] = useState<string | null>(null);
 
   // TODO: can add logic for optimal updates (POST, PUT and DELETE) here only?
