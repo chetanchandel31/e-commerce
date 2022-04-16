@@ -8,9 +8,10 @@ type SelectCategoryProps = {
     // eslint-disable-next-line no-unused-vars
     target,
   }: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
+  value: string;
 };
 
-const SelectCategory = ({ handleChange }: SelectCategoryProps) => {
+const SelectCategory = ({ handleChange, value }: SelectCategoryProps) => {
   const { error, result } = useEndpoint<undefined, Category[]>({
     endpoint: "/categories",
     preLoadResult: true,
@@ -18,7 +19,13 @@ const SelectCategory = ({ handleChange }: SelectCategoryProps) => {
 
   return (
     <>
-      <Select fullWidth name="category" onChange={handleChange} required>
+      <Select
+        fullWidth
+        name="category"
+        onChange={handleChange}
+        required
+        value={value}
+      >
         {result?.map(({ _id, name }) => (
           <option key={_id} value={_id}>
             {name}

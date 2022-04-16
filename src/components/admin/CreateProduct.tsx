@@ -33,6 +33,8 @@ const CreateProduct = () => {
   const [createProductData, setCreateProductData] = useState(
     createProductDataInitialState
   );
+  const { category, description, name, photo, price, stock } =
+    createProductData;
 
   const imageUploadBtnRef = useRef<HTMLInputElement>(null);
 
@@ -77,16 +79,16 @@ const CreateProduct = () => {
         onChange={handleChange}
         placeholder="name"
         required
+        value={name}
       />
-
       <Input
         fullWidth
         name="description"
         onChange={handleChange}
         placeholder="description"
         required
+        value={description}
       />
-
       <Input
         fullWidth
         name="price"
@@ -94,10 +96,9 @@ const CreateProduct = () => {
         placeholder="price"
         required
         type="number"
+        value={price}
       />
-
-      <SelectCategory handleChange={handleChange} />
-
+      <SelectCategory handleChange={handleChange} value={category} />
       <Input
         fullWidth
         name="stock"
@@ -105,8 +106,8 @@ const CreateProduct = () => {
         placeholder="stock"
         required
         type="number"
+        value={stock}
       />
-
       <div>
         <Button
           onClick={() => imageUploadBtnRef.current?.click()}
@@ -118,14 +119,14 @@ const CreateProduct = () => {
           Add image
         </Button>
 
-        {createProductData.photo && (
+        {photo && (
           <Text
             as="span"
             color="secondary"
             style={{ marginLeft: "1rem" }}
             variant="caption"
           >
-            {createProductData.photo?.name}
+            {photo?.name}
           </Text>
         )}
       </div>
