@@ -1,18 +1,32 @@
 import useEndpoint from "api/useEndpoint";
 import { Button, CircularProgress, H4, Text } from "haki-ui";
+import { useEffect } from "react";
 import { MdEdit } from "react-icons/md";
 import { RiDeleteBin6Fill } from "react-icons/ri";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { Product } from "shared-types";
 import { StyledManageProductsContainer } from "./styles";
 
+type RouterState = {
+  reloadProductsList?: boolean;
+};
+
 const ManageProducts = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const routerState = location.state as RouterState;
 
-  const { error, isLoading, result } = useEndpoint<undefined, Product[]>({
+  const { error, isLoading, makeRequest, result } = useEndpoint<
+    undefined,
+    Product[]
+  >({
     endpoint: "/products",
     preLoadResult: true,
   });
+
+  useEffect(() => {
+    if (routerState?.reloadProductsList) makeRequest(undefined);
+  }, [routerState?.reloadProductsList]);
 
   return (
     <StyledManageProductsContainer>
@@ -20,7 +34,7 @@ const ManageProducts = () => {
 
       {isLoading && <CircularProgress style={{ margin: "2rem auto" }} />}
 
-      {result?.length === 0 && (
+      {!isLoading && result?.length === 0 && (
         <div className="loading-state-container">
           <Text>you have no products yet 🎐</Text>{" "}
           <Button onClick={() => navigate("/admin-dashboard/create-product")}>
@@ -29,7 +43,7 @@ const ManageProducts = () => {
         </div>
       )}
 
-      {result && result?.length > 0 && (
+      {!isLoading && result && result?.length > 0 && (
         <>
           <H4>Total {result?.length} products</H4>
           <div className="product-list-container">

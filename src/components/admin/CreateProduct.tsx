@@ -41,17 +41,14 @@ const CreateProduct = () => {
   const handleChange = ({
     target,
   }: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    if (isInputTypeFile(target)) {
-      setCreateProductData((prev) => ({
-        ...prev,
-        photo: target.files && target.files[0],
-      }));
-    } else {
-      setCreateProductData((prev) => ({
-        ...prev,
-        [target.name]: target.value,
-      }));
-    }
+    const value = isInputTypeFile(target)
+      ? target.files && target.files[0]
+      : target.value;
+
+    setCreateProductData((prev) => ({
+      ...prev,
+      [target.name]: value,
+    }));
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
