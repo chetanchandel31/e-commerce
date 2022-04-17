@@ -22,3 +22,8 @@ export type EditProductDataInitialState = {
   category: string;
   stock: string;
 };
+
+export type ProductToBeDeleted = {
+  productId: string;
+  name: string;
+} | null;

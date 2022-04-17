@@ -16,7 +16,7 @@ type Args =
       preLoadResult?: false;
     };
 
-type MakeRequestReturnType = {
+export type MakeRequestReturnType = {
   data: any;
   type: "success" | "error";
 };

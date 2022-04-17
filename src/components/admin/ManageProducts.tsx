@@ -1,11 +1,13 @@
 import useEndpoint from "api/useEndpoint";
 import { Button, CircularProgress, H4, Text } from "haki-ui";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { MdEdit } from "react-icons/md";
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { Product } from "shared-types";
+import DeleteProduct from "./DeleteProduct";
 import { StyledManageProductsContainer } from "./styles";
+import { ProductToBeDeleted } from "./types";
 
 type RouterState = {
   reloadProductsList?: boolean;
@@ -15,6 +17,9 @@ const ManageProducts = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const routerState = location.state as RouterState;
+
+  const [productToBeDeleted, setProductToBeDeleted] =
+    useState<ProductToBeDeleted>(null);
 
   const { error, isLoading, makeRequest, result } = useEndpoint<
     undefined,
@@ -64,6 +69,9 @@ const ManageProducts = () => {
                 </Button>
                 <Button
                   color="danger"
+                  onClick={() =>
+                    setProductToBeDeleted({ name, productId: _id })
+                  }
                   size="sm"
                   startIcon={<RiDeleteBin6Fill />}
                   variant="ghost"
@@ -77,6 +85,14 @@ const ManageProducts = () => {
       )}
 
       <Outlet />
+
+      {productToBeDeleted !== null && (
+        <DeleteProduct
+          productToBeDeleted={productToBeDeleted}
+          reloadProductsList={makeRequest}
+          setProductToBeDeleted={setProductToBeDeleted}
+        />
+      )}
     </StyledManageProductsContainer>
   );
 };

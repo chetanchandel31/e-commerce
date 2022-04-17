@@ -63,8 +63,7 @@ const CreateProduct = () => {
 
     if (res.type === "success") {
       setCreateProductData(createProductDataInitialState);
-      // TODO: navigate somewhere more sensible
-      setTimeout(() => navigate("/"), 2000);
+      setTimeout(() => navigate("/admin-dashboard/manage-products"), 2000);
     }
   };
 

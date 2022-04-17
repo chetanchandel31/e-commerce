@@ -63,3 +63,13 @@ export const StyledEditFormBottomBtnsContainer = styled.div`
   width: 100%;
   gap: 0.5rem;
 `;
+
+export const StyledDeleteModalContainer = styled.div`
+  padding: 2rem 1rem;
+`;
+
+export const StyledDeleteModalBtnsContainer = styled(
+  StyledEditFormBottomBtnsContainer
+)`
+  margin-top: 1rem;
+`;
