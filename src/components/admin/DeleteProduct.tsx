@@ -52,7 +52,7 @@ const DeleteProduct = (props: DeleteProductProps) => {
         style={{ width: "90%", backgroundColor: colors.primary.contrastText }}
         variant="elevated"
       >
-        <StyledDeleteModalContainer style={{ padding: "2rem 1rem" }}>
+        <StyledDeleteModalContainer>
           <div>
             <Text as="span">Delete</Text>{" "}
             <Text as="span" weight="semi-bold">

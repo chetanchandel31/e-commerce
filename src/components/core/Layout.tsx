@@ -1,5 +1,6 @@
 import { H2, H4 } from "haki-ui";
 import { ReactNode } from "react";
+import "../../styles.css";
 import Header from "./Header";
 import { Container } from "./styles";
 
@@ -18,6 +19,7 @@ const Layout = ({ children, description, title }: LayoutProps) => (
       <H4 color="disabled">{description}</H4>
       {children}
     </Container>
+
     <footer>footer</footer>
   </>
 );
