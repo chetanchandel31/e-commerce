@@ -22,7 +22,7 @@ const Header = () => {
           </NavLink>
         </li>
         <li>
-          <NavLink style={getActiveLinkStyles} to="/aa">
+          <NavLink style={getActiveLinkStyles} to="/cart">
             Cart
           </NavLink>
         </li>
