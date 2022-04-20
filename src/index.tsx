@@ -1,6 +1,6 @@
 import { HakiProvider } from "haki-ui";
 import ReactDOM from "react-dom";
-import AppRoutes from "./Routes";
+import AppRoutes from "./routes";
 
 ReactDOM.render(
   <HakiProvider>
