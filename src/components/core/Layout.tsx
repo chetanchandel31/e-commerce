@@ -2,23 +2,24 @@ import { H2, H4 } from "haki-ui";
 import { ReactNode } from "react";
 import "../../styles.css";
 import Header from "./Header";
-import { Container } from "./styles";
+import { StyledLayoutContainer } from "./styles";
 
 type LayoutProps = {
   children: ReactNode;
   description?: string;
+  maxWidth?: string;
   title?: string;
 };
 
-const Layout = ({ children, description, title }: LayoutProps) => (
+const Layout = ({ children, description, maxWidth, title }: LayoutProps) => (
   <>
     <Header />
 
-    <Container>
+    <StyledLayoutContainer maxWidth={maxWidth}>
       <H2>{title}</H2>
       <H4 color="disabled">{description}</H4>
       {children}
-    </Container>
+    </StyledLayoutContainer>
 
     <footer>footer</footer>
   </>

@@ -8,6 +8,10 @@ type StyledProductCardProps = {
   isOutOfStock: boolean;
 };
 
+type StyledLayoutContainerProps = {
+  maxWidth?: string;
+};
+
 export const StyledHeaderContainer = styled.nav<StyledHeaderContainerProps>`
   background-color: ${({ color }) => color};
   padding: 1rem;
@@ -34,9 +38,9 @@ export const StyledNavMenuContainer = styled.ul`
   }
 `;
 
-export const Container = styled.div`
+export const StyledLayoutContainer = styled.div<StyledLayoutContainerProps>`
   width: 100%;
-  max-width: 62rem;
+  max-width: ${({ maxWidth }) => maxWidth || `62rem`};
   margin: auto;
   padding: 0 8px;
 
@@ -77,10 +81,9 @@ export const StyledProductCard = styled.div<StyledProductCardProps>`
   cursor: ${({ isOutOfStock }) => (isOutOfStock ? "not-allowed" : "")};
   user-select: ${({ isOutOfStock }) => (isOutOfStock ? "none" : "auto")};
 
-  & .product-card-container {
+  & .product-card-content {
     display: flex;
     flex-direction: column;
-    align-items: start;
     gap: 0.5rem;
   }
 

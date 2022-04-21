@@ -1,6 +1,7 @@
 import { useCart } from "contexts/cart-context";
 import { Backdrop, Button, Card, Chip, H5, Text } from "haki-ui";
 import { MdRemoveShoppingCart, MdShoppingCart } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 import { Product } from "shared-types";
 import { StyledProductCard } from "../styles";
 
@@ -12,7 +13,32 @@ type ProductCardProps = {
 const ProductCard = ({ enableAddToCart = true, product }: ProductCardProps) => {
   const { _id, category, description, name, price, stock } = product;
 
-  const { addToCart, removeFromCart } = useCart();
+  const navigate = useNavigate();
+
+  const { addToCart, cartItems, removeFromCart } = useCart();
+
+  const isProductAlreadyInCart =
+    cartItems.findIndex((cartProduct) => cartProduct._id === product._id) !==
+    -1;
+
+  const addToCartBtn = isProductAlreadyInCart ? (
+    <Button
+      fullWidth
+      onClick={() => navigate("/cart")}
+      startIcon={<MdShoppingCart />}
+      variant="outlined"
+    >
+      Go to cart
+    </Button>
+  ) : (
+    <Button
+      fullWidth
+      onClick={() => addToCart(product)}
+      startIcon={<MdShoppingCart />}
+    >
+      Add to cart
+    </Button>
+  );
 
   const isOutOfStock = stock < 1;
 
@@ -20,9 +46,9 @@ const ProductCard = ({ enableAddToCart = true, product }: ProductCardProps) => {
     <Card>
       <StyledProductCard isOutOfStock={isOutOfStock}>
         <Card.Media
-          src={`${process.env.REACT_APP_BACKEND}/product/photo/${_id}`}
           alt={product.name}
           height={200}
+          src={`${process.env.REACT_APP_BACKEND}/product/photo/${_id}`}
         />
 
         <Card.Content>
@@ -41,13 +67,7 @@ const ProductCard = ({ enableAddToCart = true, product }: ProductCardProps) => {
             </div>
 
             {enableAddToCart ? (
-              <Button
-                fullWidth
-                onClick={() => addToCart(product)}
-                startIcon={<MdShoppingCart />}
-              >
-                Add to cart
-              </Button>
+              addToCartBtn
             ) : (
               <Button
                 color="danger"

@@ -33,3 +33,36 @@ export const AdminProfileContainer = styled.div`
     flex-direction: column;
   }
 `;
+
+export const StyledCartContainer = styled.div`
+  display: flex;
+  gap: 1rem;
+
+  & .cart-items {
+    flex-basis: calc(313px + 2rem);
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  & .order-panel {
+    flex: 1;
+  }
+
+  & .cart-empty-state {
+    text-align: center;
+  }
+
+  & .cart-empty-state > button {
+    margin-top: 1rem;
+  }
+
+  @media (max-width: 42em) {
+    flex-direction: column;
+
+    & .cart-items {
+      flex-basis: auto;
+    }
+  }
+`;
