@@ -50,14 +50,7 @@ const AppRoutes = () => (
             <Route element={<>hi manage orders</>} path="manage-orders" />
           </Route>
 
-          <Route
-            element={
-              <PrivateRoute>
-                <Cart />
-              </PrivateRoute>
-            }
-            path="/cart"
-          />
+          <Route element={<Cart />} path="/cart" />
         </Routes>
       </CartProvider>
     </AuthProvider>

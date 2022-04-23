@@ -65,7 +65,7 @@ export const StyledEditFormBottomBtnsContainer = styled.div`
 `;
 
 export const StyledDeleteModalContainer = styled.div`
-  padding: 2rem 1rem;
+  padding: 2rem 1rem 1.5rem;
 `;
 
 export const StyledDeleteModalBtnsContainer = styled(

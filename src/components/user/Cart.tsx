@@ -4,6 +4,7 @@ import { useCart } from "contexts/cart-context";
 import { Button, H5 } from "haki-ui";
 import { BiShoppingBag } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
+import StripeCheckout from "./StripeCheckout";
 import { StyledCartContainer } from "./styles";
 
 const Cart = () => {
@@ -37,7 +38,7 @@ const Cart = () => {
         </div>
 
         <div className="order-panel" style={{ border: "solid 2px black" }}>
-          place order
+          <StripeCheckout />
         </div>
       </StyledCartContainer>
     </Layout>

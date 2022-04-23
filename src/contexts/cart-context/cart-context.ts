@@ -5,6 +5,7 @@ type CartContextInterface = {
   cartItems: Product[];
   // eslint-disable-next-line no-unused-vars
   addToCart: (product: Product) => void;
+  clearCart: () => void;
   // eslint-disable-next-line no-unused-vars
   removeFromCart: (productId: string) => void;
 };
@@ -15,5 +16,6 @@ const logWarning = () =>
 export const CartContext = createContext<CartContextInterface>({
   addToCart: logWarning,
   cartItems: [],
+  clearCart: logWarning,
   removeFromCart: logWarning,
 });
