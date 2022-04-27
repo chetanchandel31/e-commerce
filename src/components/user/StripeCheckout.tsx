@@ -21,7 +21,6 @@ const StripeCheckout = () => {
   const getFinalAmount = () =>
     cartItems.reduce((prevVal, currentVal) => prevVal + currentVal.price, 0);
 
-  // TODO: fix any
   const { makeRequest } = useEndpoint<StripePaymentRequestType, any>({
     endpoint: "/stripe-payment",
     method: "POST",
@@ -40,20 +39,17 @@ const StripeCheckout = () => {
   };
 
   return (
-    <div style={{ border: "solid 1px blue" }}>
-      StripeCheckout {getFinalAmount()}
-      <StripeCheckoutButton
-        // `publishable key` from stripe dashboard
-        stripeKey={process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY as string}
-        token={makePayment}
-        amount={getFinalAmount() * 100} // * 100 because by default things will be in cents
-        name="Buy Tshirts"
-        shippingAddress
-        billingAddress
-      >
-        <Button>Pay with stripe</Button>
-      </StripeCheckoutButton>
-    </div>
+    <StripeCheckoutButton
+      // `publishable key` from stripe dashboard
+      stripeKey={process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY as string}
+      token={makePayment}
+      amount={getFinalAmount() * 100} // * 100 because by default things will be in cents
+      name="Buy Tshirts"
+      shippingAddress
+      billingAddress
+    >
+      <Button fullWidth>Pay with stripe</Button>
+    </StripeCheckoutButton>
   );
 };
 

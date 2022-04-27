@@ -50,6 +50,11 @@ export const StyledCartContainer = styled.div`
     flex: 1;
   }
 
+  & .or {
+    text-align: center;
+    margin: 2rem 0;
+  }
+
   & .cart-empty-state {
     text-align: center;
   }
@@ -64,5 +69,13 @@ export const StyledCartContainer = styled.div`
     & .cart-items {
       flex-basis: auto;
     }
+  }
+`;
+
+export const BrainTreeLoaderContainer = styled.div`
+  padding: 6rem;
+
+  & > div {
+    margin: auto;
   }
 `;
