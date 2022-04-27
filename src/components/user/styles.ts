@@ -40,7 +40,7 @@ export const StyledCartContainer = styled.div`
 
   & .cart-items {
     flex-basis: calc(313px + 2rem);
-    padding: 1rem;
+    padding: 0 1rem;
     display: flex;
     flex-direction: column;
     gap: 1rem;
@@ -57,6 +57,15 @@ export const StyledCartContainer = styled.div`
 
   & .cart-empty-state {
     text-align: center;
+    margin-top: 2rem;
+  }
+
+  & .empty-cart-img-container {
+    text-align: center;
+
+    & > img {
+      width: 90%;
+    }
   }
 
   & .cart-empty-state > button {
@@ -64,7 +73,7 @@ export const StyledCartContainer = styled.div`
   }
 
   @media (max-width: 42em) {
-    flex-direction: column;
+    flex-direction: column-reverse;
 
     & .cart-items {
       flex-basis: auto;
@@ -77,5 +86,28 @@ export const BrainTreeLoaderContainer = styled.div`
 
   & > div {
     margin: auto;
+  }
+`;
+
+export const StyledPricingDetailsContainer = styled.div`
+  border: solid 1px rgba(0, 0, 0, 0.26);
+  padding: 1rem;
+  border-radius: 4px;
+
+  & .individual-products-container {
+    padding: 0 0 0.5rem 0;
+  }
+
+  & .individual-product {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+  }
+
+  & .price-total {
+    display: flex;
+    justify-content: space-between;
+    border-top: solid 1px rgba(0, 0, 0, 0.26);
+    padding: 0.5rem 0;
   }
 `;

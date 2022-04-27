@@ -10,14 +10,13 @@ const CreateCategory = () => {
 
   const [newCategory, setNewCategory] = useState("");
 
-  const createCategoryEndpointState = useEndpoint<
+  const { error, isLoading, makeRequest } = useEndpoint<
     CreateCategoryRequest,
     CreateCategoryResponse
   >({
     endpoint: `/category/create/${userInfo?.user._id}`,
     method: "POST",
   });
-  const { error, isLoading, makeRequest } = createCategoryEndpointState;
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -29,6 +28,7 @@ const CreateCategory = () => {
   return (
     <StyledCreateCategoryForm onSubmit={handleSubmit}>
       <Text>Enter the Category</Text>
+
       <div>
         <Input
           onChange={({ target }) => setNewCategory(target.value)}
@@ -36,11 +36,13 @@ const CreateCategory = () => {
           value={newCategory}
         />
       </div>
+
       {error && (
         <Text color="danger" variant="caption">
           {error}
         </Text>
       )}
+
       <Button isLoading={isLoading} variant="outlined">
         Create Category
       </Button>

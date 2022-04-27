@@ -1,3 +1,4 @@
+import EmptyCart from "assets/empty-cart.svg";
 import ProductCard from "components/core/helper/ProductCard";
 import Layout from "components/core/Layout";
 import { useCart } from "contexts/cart-context";
@@ -5,6 +6,7 @@ import { Button, H5 } from "haki-ui";
 import { BiShoppingBag } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import BraintreeCheckout from "./BraintreeCheckout";
+import PricingDetails from "./PricingDetails";
 import StripeCheckout from "./StripeCheckout";
 import { StyledCartContainer } from "./styles";
 
@@ -39,11 +41,21 @@ const Cart = () => {
         </div>
 
         <div className="order-panel">
-          <BraintreeCheckout />
+          {cartItems.length > 0 ? (
+            <>
+              <PricingDetails />
 
-          <h3 className="or">OR</h3>
+              <BraintreeCheckout />
 
-          <StripeCheckout />
+              <h3 className="or">OR</h3>
+
+              <StripeCheckout />
+            </>
+          ) : (
+            <div className="empty-cart-img-container">
+              <img alt="empty-cart" src={EmptyCart} />
+            </div>
+          )}
         </div>
       </StyledCartContainer>
     </Layout>
