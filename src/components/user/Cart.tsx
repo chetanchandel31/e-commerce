@@ -5,9 +5,9 @@ import { useCart } from "contexts/cart-context";
 import { Button, H5 } from "haki-ui";
 import { BiShoppingBag } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
-import BraintreeCheckout from "./BraintreeCheckout";
+import BraintreeCheckout from "./payment/BraintreeCheckout";
 import PricingDetails from "./PricingDetails";
-import StripeCheckout from "./StripeCheckout";
+import StripeCheckout from "./payment/StripeCheckout";
 import { StyledCartContainer } from "./styles";
 
 const Cart = () => {

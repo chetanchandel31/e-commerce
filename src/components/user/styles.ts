@@ -81,14 +81,6 @@ export const StyledCartContainer = styled.div`
   }
 `;
 
-export const BrainTreeLoaderContainer = styled.div`
-  padding: 6rem;
-
-  & > div {
-    margin: auto;
-  }
-`;
-
 export const StyledPricingDetailsContainer = styled.div`
   border: solid 1px rgba(0, 0, 0, 0.26);
   padding: 1rem;

@@ -5,7 +5,7 @@ import CreateProduct from "components/admin/CreateProduct";
 import EditProduct from "components/admin/EditProduct";
 import ManageProducts from "components/admin/ManageProducts";
 import Home from "components/core/Home";
-import AdminDashBoard from "components/user/AdminDashBoard";
+import AdminDashBoard from "components/admin/AdminDashBoard";
 import Cart from "components/user/Cart";
 import Signin from "components/user/Signin";
 import Signup from "components/user/Signup";
