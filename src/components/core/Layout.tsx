@@ -1,6 +1,7 @@
 import { H2, H4 } from "haki-ui";
 import { ReactNode } from "react";
 import "../../styles.css";
+import Footer from "./Footer";
 import Header from "./Header";
 import { StyledLayoutContainer } from "./styles";
 
@@ -21,7 +22,7 @@ const Layout = ({ children, description, maxWidth, title }: LayoutProps) => (
       {children}
     </StyledLayoutContainer>
 
-    <footer>footer</footer>
+    <Footer />
   </>
 );
 

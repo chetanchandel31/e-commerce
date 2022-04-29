@@ -127,3 +127,21 @@ export const StyledSpinnerContainer = styled.div`
     margin: auto;
   }
 `;
+
+export const StyledFooter = styled.footer`
+  padding: 0 2rem 2rem 2rem;
+
+  margin-top: 3rem;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+
+  & > div {
+    padding-top: 2rem;
+    border-top: solid 1px rgba(0, 0, 0, 0.26);
+    width: 100%;
+    text-align: center;
+  }
+`;
