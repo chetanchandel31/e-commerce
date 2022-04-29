@@ -15,6 +15,13 @@ type StyledLayoutContainerProps = {
 export const StyledHeaderContainer = styled.nav<StyledHeaderContainerProps>`
   background-color: ${({ color }) => color};
   padding: 1rem;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+
+  z-index: 2;
 `;
 
 export const StyledNavMenuContainer = styled.ul`
@@ -42,6 +49,7 @@ export const StyledLayoutContainer = styled.div<StyledLayoutContainerProps>`
   width: 100%;
   max-width: ${({ maxWidth }) => maxWidth || `62rem`};
   margin: auto;
+  margin-top: 50px;
   padding: 0 8px;
 
   flex-grow: 1;
@@ -52,10 +60,11 @@ export const StyledLayoutContainer = styled.div<StyledLayoutContainerProps>`
   }
 
   & > h2 {
-    margin-top: 1rem;
+    margin-top: 2rem;
   }
 
   & > h4 {
+    margin-top: 0.5rem;
     margin-bottom: 2rem;
   }
 `;
