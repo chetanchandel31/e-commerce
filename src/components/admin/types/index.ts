@@ -21,6 +21,7 @@ export type EditProductDataInitialState = {
   price: string;
   category: string;
   stock: string;
+  photo: File | null;
 };
 
 export type ProductToBeDeleted = {

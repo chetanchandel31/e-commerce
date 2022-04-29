@@ -9,7 +9,8 @@ import {
   Text,
   useTheme,
 } from "haki-ui";
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
+import { BiImageAdd } from "react-icons/bi";
 import { MdUpload } from "react-icons/md";
 import { useNavigate, useParams } from "react-router-dom";
 import { Product } from "shared-types";
@@ -27,6 +28,7 @@ const editProductDataInitialState: EditProductDataInitialState = {
   price: "",
   category: "",
   stock: "",
+  photo: null,
 };
 
 const EditProduct = () => {
@@ -35,8 +37,10 @@ const EditProduct = () => {
   const { colors } = useTheme();
   const { userInfo } = useAuth();
 
-  const [{ category, description, name, price, stock }, setEditProductData] =
-    useState(editProductDataInitialState);
+  const [
+    { category, description, name, photo, price, stock },
+    setEditProductData,
+  ] = useState(editProductDataInitialState);
 
   const {
     error: getProductError,
@@ -49,7 +53,6 @@ const EditProduct = () => {
 
   useEffect(() => {
     if (getProductResult !== null) {
-      // TODO: think about photo
       const { category, description, name, price, stock } = getProductResult;
       setEditProductData((prev) => ({
         ...prev,
@@ -87,7 +90,14 @@ const EditProduct = () => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const editProductData = { category, description, name, price, stock };
+    const editProductData = {
+      category,
+      description,
+      name,
+      photo,
+      price,
+      stock,
+    };
     const formData = new FormData();
 
     Object.entries(editProductData).forEach(([key, value]) => {
@@ -102,6 +112,8 @@ const EditProduct = () => {
       });
     }
   };
+
+  const imageUploadBtnRef = useRef<HTMLInputElement>(null);
 
   return (
     <Backdrop blur={2} show>
@@ -174,6 +186,37 @@ const EditProduct = () => {
                 required
                 type="number"
                 value={stock}
+              />
+            </div>
+
+            <div>
+              <Button
+                onClick={() => imageUploadBtnRef.current?.click()}
+                size="sm"
+                startIcon={<BiImageAdd />}
+                type="button"
+                variant="outlined"
+              >
+                Add image
+              </Button>
+
+              {photo && (
+                <Text
+                  as="span"
+                  color="secondary"
+                  style={{ marginLeft: "1rem" }}
+                  variant="caption"
+                >
+                  {photo?.name}
+                </Text>
+              )}
+
+              <input
+                name="photo"
+                onChange={handleChange}
+                ref={imageUploadBtnRef}
+                style={{ display: "none" }}
+                type="file"
               />
             </div>
 
