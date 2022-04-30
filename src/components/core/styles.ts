@@ -21,7 +21,7 @@ export const StyledHeaderContainer = styled.nav<StyledHeaderContainerProps>`
   left: 0;
   right: 0;
 
-  z-index: 2;
+  z-index: 7;
 `;
 
 export const StyledNavMenuContainer = styled.ul`

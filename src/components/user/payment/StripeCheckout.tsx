@@ -38,7 +38,7 @@ const StripeCheckout = () => {
     } else console.log(res);
   };
 
-  return (
+  return userInfo ? (
     <StripeCheckoutButton
       // `publishable key` from stripe dashboard
       stripeKey={process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY as string}
@@ -50,6 +50,12 @@ const StripeCheckout = () => {
     >
       <Button fullWidth>Pay with stripe</Button>
     </StripeCheckoutButton>
+  ) : (
+    <div>
+      <Button fullWidth onClick={() => navigate("/signin")}>
+        Pay with stripe
+      </Button>
+    </div>
   );
 };
 

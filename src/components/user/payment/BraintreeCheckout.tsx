@@ -28,7 +28,7 @@ const BraintreeCheckout = () => {
     GetBrainTreeTokenResponse
   >({
     endpoint: `/payment/braintree/${userInfo?.user._id}`,
-    preLoadResult: true,
+    preLoadResult: Boolean(userInfo?.user._id),
   });
 
   const { makeRequest: makeProcessPaymentReq } = useEndpoint<
