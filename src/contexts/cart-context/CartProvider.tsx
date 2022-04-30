@@ -45,14 +45,17 @@ export const CartProvider = ({ children }: CartProviderProps) => {
     }
   };
 
-  const clearCart = () => setCartItems([]);
+  const clearCart = () => {
+    setCartItems([]);
+    localStorage.setItem(CART, JSON.stringify([]));
+  };
 
   return (
     <CartContext.Provider
       // problem: whenever component renders, value object will change and context will run unnecessarily
       // justification: this component can only re-render when `userInfo` changes and we *want* context to re-render in such case
       // eslint-disable-next-line react/jsx-no-constructed-context-values
-      value={{ addToCart, removeFromCart, cartItems, clearCart }}
+      value={{ addToCart, cartItems, clearCart, removeFromCart }}
     >
       {children}
     </CartContext.Provider>
