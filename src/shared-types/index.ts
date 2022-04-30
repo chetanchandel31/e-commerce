@@ -35,3 +35,14 @@ export type Product = {
   updatedAt: string;
   _id: string;
 };
+
+export type Order = {
+  amount: number;
+  createdAt: string;
+  products: Product[];
+  status: "Cancelled" | "Delivered" | "Shipped" | "Processing" | "Received";
+  transaction_id: string;
+  updatedAt: string;
+  user: User;
+  _id: string;
+};

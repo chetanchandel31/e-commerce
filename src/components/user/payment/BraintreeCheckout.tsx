@@ -5,37 +5,46 @@ import { useAuth } from "contexts/auth-context";
 import { useCart } from "contexts/cart-context";
 import { Button, CircularProgress } from "haki-ui";
 import { useState } from "react";
+import {
+  CreateOrderRequest,
+  CreateOrderResponse,
+  GetBrainTreeTokenResponse,
+  ProcessPaymentRequest,
+} from "../types";
 import { BrainTreeLoaderContainer } from "./styles";
-
-type GetBrainTreeTokenResponse = {
-  clientToken: string;
-  success: string;
-};
-
-type ProcessPaymentRequest = {
-  amount: number;
-  nonceFromTheClient: string;
-};
 
 const BraintreeCheckout = () => {
   const { userInfo } = useAuth();
   const { cartItems, clearCart } = useCart();
 
+  const cartItemsTotalPrice = cartItems.reduce(
+    (prevVal, currentVal) => prevVal + currentVal.price,
+    0
+  );
+
   const [instance, setInstance] = useState<Dropin | null>(null);
 
-  const { isLoading, result } = useEndpoint<
-    undefined,
-    GetBrainTreeTokenResponse
-  >({
+  const {
+    isLoading: isGetBrainTreeTokenLoading,
+    result: getBrainTreeTokenResult,
+  } = useEndpoint<undefined, GetBrainTreeTokenResponse>({
     endpoint: `/payment/braintree/${userInfo?.user._id}`,
     preLoadResult: Boolean(userInfo?.user._id),
   });
 
-  const { makeRequest: makeProcessPaymentReq } = useEndpoint<
-    ProcessPaymentRequest,
-    any
-  >({
+  const {
+    isLoading: isProcessPaymentLoading,
+    makeRequest: makeProcessPaymentReq,
+  } = useEndpoint<ProcessPaymentRequest, any>({
     endpoint: `/payment/braintree/${userInfo?.user._id}`,
+    method: "POST",
+  });
+
+  const {
+    isLoading: isCreateOrderLoading,
+    makeRequest: makeCreateOrderRequest,
+  } = useEndpoint<CreateOrderRequest, CreateOrderResponse>({
+    endpoint: `/order/create/${userInfo?.user._id}`,
     method: "POST",
   });
 
@@ -44,36 +53,47 @@ const BraintreeCheckout = () => {
     const dropInResponse = await instance?.requestPaymentMethod();
 
     const res = await makeProcessPaymentReq({
-      amount: cartItems.reduce(
-        (prevVal, currentVal) => prevVal + currentVal.price,
-        0
-      ),
+      amount: cartItemsTotalPrice,
       nonceFromTheClient: dropInResponse?.nonce as string,
     });
 
-    if (res.type === "success") clearCart();
+    if (res.type === "success") {
+      makeCreateOrderRequest({
+        order: {
+          amount: cartItemsTotalPrice,
+          products: cartItems,
+          transaction_id: res.data.transaction.id,
+        },
+      });
+      clearCart();
+    }
   };
 
   return (
     <>
-      {isLoading && (
+      {isGetBrainTreeTokenLoading && (
         <BrainTreeLoaderContainer className="braintree-loader">
           <CircularProgress size={60} />
         </BrainTreeLoaderContainer>
       )}
 
-      {result !== null && (
+      {getBrainTreeTokenResult !== null && (
         <>
           <DropIn
             onInstance={(instance) => {
               // this callback runs on mount
               setInstance(instance);
             }}
-            options={{ authorization: result?.clientToken }}
+            options={{ authorization: getBrainTreeTokenResult?.clientToken }}
           />
           <Button
             fullWidth
-            isLoading={isLoading || instance === null}
+            isLoading={
+              isGetBrainTreeTokenLoading ||
+              isProcessPaymentLoading ||
+              isCreateOrderLoading ||
+              instance === null
+            }
             onClick={buy}
           >
             Pay

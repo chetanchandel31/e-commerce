@@ -5,6 +5,7 @@ import { Button } from "haki-ui";
 import { useNavigate } from "react-router-dom";
 import StripeCheckoutButton, { Token } from "react-stripe-checkout";
 import { Product } from "shared-types";
+import { CreateOrderRequest, CreateOrderResponse } from "../types";
 
 type StripePaymentRequestType = {
   token: Token;
@@ -21,8 +22,19 @@ const StripeCheckout = () => {
   const getFinalAmount = () =>
     cartItems.reduce((prevVal, currentVal) => prevVal + currentVal.price, 0);
 
-  const { makeRequest } = useEndpoint<StripePaymentRequestType, any>({
+  const { makeRequest: makeStripePaymentRequest } = useEndpoint<
+    StripePaymentRequestType,
+    any
+  >({
     endpoint: "/stripe-payment",
+    method: "POST",
+  });
+
+  const { makeRequest: makeCreateOrderRequest } = useEndpoint<
+    CreateOrderRequest,
+    CreateOrderResponse
+  >({
+    endpoint: `/order/create/${userInfo?.user._id}`,
     method: "POST",
   });
 
@@ -30,10 +42,16 @@ const StripeCheckout = () => {
   const makePayment = async (token: Token) => {
     if (!userInfo) return navigate("/signin");
 
-    const res = await makeRequest({ token, products: cartItems });
+    const res = await makeStripePaymentRequest({ token, products: cartItems });
 
     if (res.type === "success") {
-      // TODO: if sucess, 1. post request to 2. "/order/create/${userId}" 3. {order: orderData} in req.body
+      makeCreateOrderRequest({
+        order: {
+          amount: getFinalAmount(),
+          products: cartItems,
+          transaction_id: res.data.id,
+        },
+      });
       clearCart();
     } else console.log(res);
   };
