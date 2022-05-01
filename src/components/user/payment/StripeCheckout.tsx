@@ -4,12 +4,12 @@ import { useCart } from "contexts/cart-context";
 import { Button } from "haki-ui";
 import { useNavigate } from "react-router-dom";
 import StripeCheckoutButton, { Token } from "react-stripe-checkout";
-import { Product } from "shared-types";
+import { ProductInCart } from "shared-types";
 import { CreateOrderRequest, CreateOrderResponse } from "../types";
 
 type StripePaymentRequestType = {
   token: Token;
-  products: Product[];
+  products: ProductInCart[];
 };
 
 const StripeCheckout = () => {

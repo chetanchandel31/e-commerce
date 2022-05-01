@@ -1,10 +1,10 @@
 import { createContext } from "react";
-import { Product } from "shared-types";
+import { ProductInCart } from "shared-types";
 
 type CartContextInterface = {
-  cartItems: Product[];
+  cartItems: ProductInCart[];
   // eslint-disable-next-line no-unused-vars
-  addToCart: (product: Product) => void;
+  addToCart: (product: ProductInCart) => void;
   clearCart: () => void;
   // eslint-disable-next-line no-unused-vars
   removeFromCart: (productId: string) => void;

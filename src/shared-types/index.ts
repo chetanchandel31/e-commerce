@@ -36,6 +36,16 @@ export type Product = {
   _id: string;
 };
 
+// is with us locally
+export type ProductInCart = {
+  count: number;
+  name: string;
+  price: number;
+  /** product._id */
+  product: string;
+};
+
+// comes from DB
 export type ProductInOrder = {
   count: number;
   _id: string;

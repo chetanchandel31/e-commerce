@@ -1,6 +1,6 @@
 import { ReactNode, useEffect, useState } from "react";
 import { CART } from "shared-constants";
-import { Product } from "shared-types";
+import { ProductInCart } from "shared-types";
 import { CartContext } from "./cart-context";
 
 type CartProviderProps = {
@@ -8,20 +8,20 @@ type CartProviderProps = {
 };
 
 export const CartProvider = ({ children }: CartProviderProps) => {
-  const [cartItems, setCartItems] = useState<Product[]>([]);
+  const [cartItems, setCartItems] = useState<ProductInCart[]>([]);
 
   useEffect(() => {
     const cartItemsFromLocalStorage = localStorage.getItem(CART);
 
     if (cartItemsFromLocalStorage) {
       setCartItems(
-        JSON.parse(cartItemsFromLocalStorage as string) as Product[]
+        JSON.parse(cartItemsFromLocalStorage as string) as ProductInCart[]
       );
     }
   }, []);
 
-  const addToCart = (product: Product) => {
-    const cartItems: Product[] =
+  const addToCart = (product: ProductInCart) => {
+    const cartItems: ProductInCart[] =
       JSON.parse(localStorage.getItem(CART) as string) || [];
 
     localStorage.setItem(CART, JSON.stringify([...cartItems, product]));
@@ -33,10 +33,10 @@ export const CartProvider = ({ children }: CartProviderProps) => {
     const cartFromLocalStorage = localStorage.getItem(CART);
 
     if (cartFromLocalStorage) {
-      const cartItems: Product[] = JSON.parse(cartFromLocalStorage) || [];
+      const cartItems: ProductInCart[] = JSON.parse(cartFromLocalStorage) || [];
 
       const filteredCartItems = cartItems.filter(
-        (product) => product._id !== productId
+        (cartProduct) => cartProduct.product !== productId
       );
 
       localStorage.setItem(CART, JSON.stringify(filteredCartItems));

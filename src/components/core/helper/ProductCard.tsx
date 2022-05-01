@@ -18,8 +18,9 @@ const ProductCard = ({ enableAddToCart = true, product }: ProductCardProps) => {
   const { addToCart, cartItems, removeFromCart } = useCart();
 
   const isProductAlreadyInCart =
-    cartItems.findIndex((cartProduct) => cartProduct._id === product._id) !==
-    -1;
+    cartItems.findIndex(
+      (cartProduct) => cartProduct.product === product._id
+    ) !== -1;
 
   const addToCartBtn = isProductAlreadyInCart ? (
     <Button
@@ -33,7 +34,7 @@ const ProductCard = ({ enableAddToCart = true, product }: ProductCardProps) => {
   ) : (
     <Button
       fullWidth
-      onClick={() => addToCart(product)}
+      onClick={() => addToCart({ count: 1, name, price, product: _id })}
       startIcon={<MdShoppingCart />}
     >
       Add to cart

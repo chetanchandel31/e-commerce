@@ -15,10 +15,10 @@ const PricingDetails = () => {
       <H4>PRICING DETAILS</H4>
 
       <div className="individual-products-container">
-        {cartItems.map((product) => (
-          <div className="individual-product" key={product._id}>
-            <span>{product.name}</span>
-            <span>{product.price}</span>
+        {cartItems.map(({ name, price, product }) => (
+          <div className="individual-product" key={product}>
+            <span>{name}</span>
+            <span>{price}</span>
           </div>
         ))}
       </div>

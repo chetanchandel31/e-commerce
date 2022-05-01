@@ -1,25 +1,56 @@
+import useEndpoint from "api/useEndpoint";
 import EmptyCart from "assets/empty-cart.svg";
 import ProductCard from "components/core/helper/ProductCard";
 import Layout from "components/core/Layout";
 import { useCart } from "contexts/cart-context";
-import { Button, H5 } from "haki-ui";
+import { Button, CircularProgress, H5, Text } from "haki-ui";
 import { BiShoppingBag } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
+import { Product } from "shared-types";
 import BraintreeCheckout from "./payment/BraintreeCheckout";
-import PricingDetails from "./PricingDetails";
 import StripeCheckout from "./payment/StripeCheckout";
+import PricingDetails from "./PricingDetails";
 import { StyledCartContainer } from "./styles";
 
 const Cart = () => {
   const { cartItems } = useCart();
 
+  const { error, isLoading, result } = useEndpoint<undefined, Product[]>({
+    endpoint: "/products",
+    preLoadResult: true,
+  });
+
+  const cartProducts = result?.filter((product) =>
+    cartItems.find((cartProduct) => cartProduct.product === product._id)
+  );
+
   const navigate = useNavigate();
+
+  if (isLoading || error) {
+    return (
+      <Layout>
+        {isLoading && (
+          <CircularProgress
+            size={100}
+            style={{ margin: "8rem auto" }}
+            thickness={9}
+          />
+        )}
+
+        {error && (
+          <Text color="danger" style={{ margin: "8rem", textAlign: "center" }}>
+            {error}
+          </Text>
+        )}
+      </Layout>
+    );
+  }
 
   return (
     <Layout>
       <StyledCartContainer>
         <div className="cart-items">
-          {cartItems.length === 0 && (
+          {cartProducts?.length === 0 && (
             <div className="cart-empty-state">
               <H5>Your cart is empty</H5>
               <Button
@@ -31,7 +62,7 @@ const Cart = () => {
             </div>
           )}
 
-          {cartItems.map((product) => (
+          {cartProducts?.map((product) => (
             <ProductCard
               product={product}
               enableAddToCart={false}
@@ -41,7 +72,7 @@ const Cart = () => {
         </div>
 
         <div className="order-panel">
-          {cartItems.length > 0 ? (
+          {cartProducts && cartProducts.length > 0 ? (
             <>
               <PricingDetails />
 

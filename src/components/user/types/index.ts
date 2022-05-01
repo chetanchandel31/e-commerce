@@ -1,4 +1,4 @@
-import { Order, Product, User, UserInfo } from "shared-types";
+import { Order, ProductInCart, User, UserInfo } from "shared-types";
 
 export type SignupReqBody = { email: string; name: string; password: string };
 export type SignupResponse = User;
@@ -19,7 +19,7 @@ export type ProcessPaymentRequest = {
 export type CreateOrderRequest = {
   order: {
     amount: number;
-    products: Product[];
+    products: ProductInCart[];
     transaction_id: string;
   };
 };
