@@ -1,15 +1,14 @@
 import AdminRoute from "auth/helper/AdminRoute";
-import PrivateRoute from "auth/helper/PrivateRoute";
+import AdminDashBoard from "components/admin/AdminDashBoard";
 import CreateCategory from "components/admin/CreateCategory";
 import CreateProduct from "components/admin/CreateProduct";
 import EditProduct from "components/admin/EditProduct";
 import ManageProducts from "components/admin/ManageProducts";
+import Orders from "components/admin/Orders";
 import Home from "components/core/Home";
-import AdminDashBoard from "components/admin/AdminDashBoard";
 import Cart from "components/user/Cart";
 import Signin from "components/user/Signin";
 import Signup from "components/user/Signup";
-import UserDashBoard from "components/user/UserDashBoard";
 import { AuthProvider } from "contexts/auth-context";
 import { CartProvider } from "contexts/cart-context";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
@@ -21,18 +20,20 @@ const AppRoutes = () => (
         <Routes>
           <Route path="/" element={<Home />} />
 
+          <Route path="/cart" element={<Cart />} />
+
           <Route path="/signup" element={<Signup />} />
 
           <Route path="/signin" element={<Signin />} />
 
-          <Route
+          {/* <Route
             element={
               <PrivateRoute>
                 <UserDashBoard />
               </PrivateRoute>
             }
             path="/user-dashboard"
-          />
+          /> */}
 
           <Route
             element={
@@ -47,10 +48,8 @@ const AppRoutes = () => (
             <Route element={<ManageProducts />} path="manage-products">
               <Route element={<EditProduct />} path=":productId" />
             </Route>
-            <Route element={<>hi manage orders</>} path="manage-orders" />
+            <Route element={<Orders />} path="orders" />
           </Route>
-
-          <Route element={<Cart />} path="/cart" />
         </Routes>
       </CartProvider>
     </AuthProvider>

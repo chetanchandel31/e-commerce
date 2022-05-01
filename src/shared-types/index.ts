@@ -36,10 +36,18 @@ export type Product = {
   _id: string;
 };
 
+export type ProductInOrder = {
+  count: number;
+  _id: string;
+  name: string;
+  price: number;
+  product?: Product;
+};
+
 export type Order = {
   amount: number;
   createdAt: string;
-  products: Product[];
+  products: ProductInOrder[];
   status: "Cancelled" | "Delivered" | "Shipped" | "Processing" | "Received";
   transaction_id: string;
   updatedAt: string;

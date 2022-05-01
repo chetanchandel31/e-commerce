@@ -73,3 +73,40 @@ export const StyledDeleteModalBtnsContainer = styled(
 )`
   margin-top: 1rem;
 `;
+
+export const OrdersContainer = styled.div`
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+
+  & .orders-empty-state-container {
+    text-align: center;
+
+    & > img {
+      width: 90%;
+      margin-bottom: 2rem;
+      max-width: 600px;
+    }
+  }
+`;
+
+export const SingleOrder = styled.div`
+  & .order-sub-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 1rem;
+  }
+`;
+
+export const SingleOrderProductsContainer = styled.div`
+  margin: 1rem;
+
+  & .single-order-products {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+`;

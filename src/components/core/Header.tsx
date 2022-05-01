@@ -26,11 +26,11 @@ const Header = () => {
             Cart
           </NavLink>
         </li>
-        <li>
+        {/* <li>
           <NavLink style={getActiveLinkStyles} to="/user-dashboard">
             Dashboard
           </NavLink>
-        </li>
+        </li> */}
         {userInfo?.user.role === 1 && (
           <li>
             <NavLink style={getActiveLinkStyles} to="/admin-dashboard">
