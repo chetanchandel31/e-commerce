@@ -1,6 +1,11 @@
 import { useCart } from "contexts/cart-context";
-import { Backdrop, Button, Card, Chip, H5, Text } from "haki-ui";
-import { MdRemoveShoppingCart, MdShoppingCart } from "react-icons/md";
+import { Backdrop, Button, Card, Chip, H5, IconButton, Text } from "haki-ui";
+import {
+  MdRemoveShoppingCart,
+  MdShoppingCart,
+  MdOutlineAdd,
+  MdOutlineRemove,
+} from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { Product } from "shared-types";
 import { StyledProductCard } from "../styles";
@@ -15,7 +20,17 @@ const ProductCard = ({ enableAddToCart = true, product }: ProductCardProps) => {
 
   const navigate = useNavigate();
 
-  const { addToCart, cartItems, removeFromCart } = useCart();
+  const {
+    addToCart,
+    cartItems,
+    decreaseCartProductQuantity,
+    increaseCartProductQuantity,
+    removeFromCart,
+  } = useCart();
+
+  const quantity = cartItems.find(
+    (cartProduct) => cartProduct.product === _id
+  )?.count;
 
   const isProductAlreadyInCart =
     cartItems.findIndex(
@@ -58,6 +73,33 @@ const ProductCard = ({ enableAddToCart = true, product }: ProductCardProps) => {
 
             <Text>{description}</Text>
 
+            {!enableAddToCart && (
+              <div className="quantity-counter">
+                <Text color="disabled" weight="semi-bold">
+                  Quantity:
+                </Text>
+
+                <div>
+                  <IconButton
+                    circular
+                    disabled={Boolean(quantity && quantity <= 1)}
+                    icon={<MdOutlineRemove />}
+                    onClick={() => decreaseCartProductQuantity(_id)}
+                    size="sm"
+                    variant="ghost"
+                  />
+                  {quantity}
+                  <IconButton
+                    circular
+                    icon={<MdOutlineAdd />}
+                    onClick={() => increaseCartProductQuantity(_id)}
+                    size="sm"
+                    variant="ghost"
+                  />
+                </div>
+              </div>
+            )}
+
             <div className="price-category-container">
               <Chip color="secondary" size="sm">
                 {category.name}
@@ -67,19 +109,21 @@ const ProductCard = ({ enableAddToCart = true, product }: ProductCardProps) => {
               </Text>
             </div>
 
-            {enableAddToCart ? (
-              addToCartBtn
-            ) : (
-              <Button
-                color="danger"
-                fullWidth
-                onClick={() => removeFromCart(product._id)}
-                startIcon={<MdRemoveShoppingCart />}
-                variant="outlined"
-              >
-                Remove from cart
-              </Button>
-            )}
+            <div className="cart-btn">
+              {enableAddToCart ? (
+                addToCartBtn
+              ) : (
+                <Button
+                  color="danger"
+                  fullWidth
+                  onClick={() => removeFromCart(product._id)}
+                  startIcon={<MdRemoveShoppingCart />}
+                  variant="outlined"
+                >
+                  Remove from cart
+                </Button>
+              )}
+            </div>
           </div>
         </Card.Content>
 

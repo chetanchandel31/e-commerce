@@ -15,12 +15,7 @@ import { BrainTreeLoaderContainer } from "./styles";
 
 const BraintreeCheckout = () => {
   const { userInfo } = useAuth();
-  const { cartItems, clearCart } = useCart();
-
-  const cartItemsTotalPrice = cartItems.reduce(
-    (prevVal, currentVal) => prevVal + currentVal.price,
-    0
-  );
+  const { cartItems, cartItemsTotalPrice, clearCart } = useCart();
 
   const [instance, setInstance] = useState<Dropin | null>(null);
 

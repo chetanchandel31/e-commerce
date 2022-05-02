@@ -90,6 +90,12 @@ export const StyledProductCard = styled.div<StyledProductCardProps>`
   cursor: ${({ isOutOfStock }) => (isOutOfStock ? "not-allowed" : "")};
   user-select: ${({ isOutOfStock }) => (isOutOfStock ? "none" : "auto")};
 
+  & .quantity-counter {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
   & .product-card-content {
     display: flex;
     flex-direction: column;
@@ -100,7 +106,11 @@ export const StyledProductCard = styled.div<StyledProductCardProps>`
     display: flex;
     justify-content: space-between;
     width: 100%;
-    margin: 0.5rem 0;
+    margin: 0.5rem 0 0 0;
+  }
+
+  & .cart-btn {
+    margin-top: 0.5rem;
   }
 
   & .out-of-stock {

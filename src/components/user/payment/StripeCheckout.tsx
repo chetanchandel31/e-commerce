@@ -17,10 +17,7 @@ const StripeCheckout = () => {
 
   const { userInfo } = useAuth();
 
-  const { cartItems, clearCart } = useCart();
-
-  const getFinalAmount = () =>
-    cartItems.reduce((prevVal, currentVal) => prevVal + currentVal.price, 0);
+  const { cartItems, cartItemsTotalPrice, clearCart } = useCart();
 
   const { makeRequest: makeStripePaymentRequest } = useEndpoint<
     StripePaymentRequestType,
@@ -47,7 +44,7 @@ const StripeCheckout = () => {
     if (res.type === "success") {
       makeCreateOrderRequest({
         order: {
-          amount: getFinalAmount(),
+          amount: cartItemsTotalPrice,
           products: cartItems,
           transaction_id: res.data.id,
         },
@@ -61,7 +58,7 @@ const StripeCheckout = () => {
       // `publishable key` from stripe dashboard
       stripeKey={process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY as string}
       token={makePayment}
-      amount={getFinalAmount() * 100} // * 100 because by default things will be in cents
+      amount={cartItemsTotalPrice * 100} // * 100 because by default things will be in cents
       name="Buy Tshirts"
       shippingAddress
       billingAddress
