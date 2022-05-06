@@ -46,7 +46,7 @@ const DeleteProduct = (props: DeleteProductProps) => {
   };
 
   return (
-    <Backdrop blur={2} show>
+    <Backdrop blur={2} show style={{ position: "fixed" }}>
       <Card
         maxWidth={400}
         style={{ width: "90%", backgroundColor: colors.primary.contrastText }}
