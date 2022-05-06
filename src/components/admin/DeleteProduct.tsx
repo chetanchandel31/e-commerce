@@ -67,7 +67,11 @@ const DeleteProduct = (props: DeleteProductProps) => {
             <Button color="danger" isLoading={isLoading} onClick={handleDelete}>
               Delete
             </Button>
-            <Button onClick={() => setProductToBeDeleted(null)} variant="ghost">
+            <Button
+              isLoading={isLoading}
+              onClick={() => setProductToBeDeleted(null)}
+              variant="ghost"
+            >
               cancel
             </Button>
           </StyledDeleteModalBtnsContainer>

@@ -234,6 +234,7 @@ const EditProduct = () => {
               </Button>
               <Button
                 color="danger"
+                isLoading={isUpdateProductLoading}
                 onClick={() => navigate("/admin-dashboard/manage-products")}
                 type="button"
                 variant="ghost"
