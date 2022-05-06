@@ -100,6 +100,10 @@ export const StyledProductCard = styled.div<StyledProductCardProps>`
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+
+    & > h5 {
+      text-align: center;
+    }
   }
 
   & .price-category-container {

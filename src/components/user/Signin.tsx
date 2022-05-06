@@ -20,14 +20,17 @@ const Signin = () => {
 
   const { signIn } = useAuth();
 
-  const signinEndpointState = useEndpoint<SigninReqBody, SigninResponse>({
+  const { error, isLoading, makeRequest } = useEndpoint<
+    SigninReqBody,
+    SigninResponse
+  >({
     endpoint: "/signin",
     method: "POST",
   });
-  const { error, isLoading, makeRequest } = signinEndpointState;
 
-  const [signinData, setSigninData] = useState(signinDataInitialState);
-  const { email, password, doShowPassword } = signinData;
+  const [{ email, password, doShowPassword }, setSigninData] = useState(
+    signinDataInitialState
+  );
 
   const handleChange = ({ target }: ChangeEvent<HTMLInputElement>) =>
     setSigninData((prev) => ({ ...prev, [target.name]: target.value }));
@@ -45,6 +48,13 @@ const Signin = () => {
     setSigninData((prev) => ({
       ...prev,
       doShowPassword: !prev.doShowPassword,
+    }));
+
+  const handleDummySignIn = (isDummySignInAsAdmin?: boolean) =>
+    setSigninData((prev) => ({
+      ...prev,
+      email: isDummySignInAsAdmin ? "admin@admin.com" : "regular_user@user.com",
+      password: "123456",
     }));
 
   return (
@@ -89,6 +99,25 @@ const Signin = () => {
         <Button disabled={doDisableSignin} fullWidth isLoading={isLoading}>
           Sign in
         </Button>
+
+        <div>
+          <Button
+            onClick={() => handleDummySignIn()}
+            size="sm"
+            type="button"
+            variant="ghost"
+          >
+            Use test credentials
+          </Button>
+          <Button
+            onClick={() => handleDummySignIn(true)}
+            size="sm"
+            type="button"
+            variant="ghost"
+          >
+            Use test credentials (admin)
+          </Button>
+        </div>
       </StyledAuthForm>
     </Layout>
   );
