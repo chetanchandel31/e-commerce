@@ -3,27 +3,31 @@ import { useAuth } from "contexts/auth-context";
 import { Backdrop, Button, Card, Text, useTheme } from "haki-ui";
 import { Dispatch, SetStateAction } from "react";
 import { Product } from "shared-types";
+import { ItemToBeDeleted } from ".";
 import {
   StyledDeleteModalBtnsContainer,
   StyledDeleteModalContainer,
-} from "./styles";
-import { ProductToBeDeleted } from "./types";
+} from "../styles";
 
 type DeleteProductResponse = {
   deletedProduct: Product;
   message: string;
 };
 
-type DeleteProductProps = {
-  productToBeDeleted: ProductToBeDeleted;
+// TODO: use with second useEndpointHook
+// type DeleteCategoryResponse = {
+
+// }
+
+type DeleteItemProps = {
+  itemToBeDeleted: ItemToBeDeleted;
   // eslint-disable-next-line no-unused-vars
-  reloadProductsList: (reqBody: undefined) => Promise<MakeRequestReturnType>;
-  setProductToBeDeleted: Dispatch<SetStateAction<ProductToBeDeleted>>;
+  reloadList: (reqBody: undefined) => Promise<MakeRequestReturnType>;
+  setItemToBeDeleted: Dispatch<SetStateAction<ItemToBeDeleted>>;
 };
 
-const DeleteProduct = (props: DeleteProductProps) => {
-  const { productToBeDeleted, reloadProductsList, setProductToBeDeleted } =
-    props;
+const DeleteItemModal = (props: DeleteItemProps) => {
+  const { itemToBeDeleted, reloadList, setItemToBeDeleted } = props;
 
   const { colors } = useTheme();
   const { userInfo } = useAuth();
@@ -32,7 +36,7 @@ const DeleteProduct = (props: DeleteProductProps) => {
     undefined,
     DeleteProductResponse
   >({
-    endpoint: `/product/${productToBeDeleted?.productId}/${userInfo?.user._id}`,
+    endpoint: `/product/${itemToBeDeleted?.id}/${userInfo?.user._id}`,
     method: "DELETE",
   });
 
@@ -40,8 +44,8 @@ const DeleteProduct = (props: DeleteProductProps) => {
     const res = await makeRequest(undefined);
 
     if (res.type === "success") {
-      reloadProductsList(undefined);
-      setProductToBeDeleted(null);
+      reloadList(undefined);
+      setItemToBeDeleted(null);
     }
   };
 
@@ -56,7 +60,7 @@ const DeleteProduct = (props: DeleteProductProps) => {
           <div>
             <Text as="span">Delete</Text>{" "}
             <Text as="span" weight="semi-bold">
-              {productToBeDeleted?.name}
+              {itemToBeDeleted?.name}
             </Text>
             ?
           </div>
@@ -69,10 +73,10 @@ const DeleteProduct = (props: DeleteProductProps) => {
             </Button>
             <Button
               isLoading={isLoading}
-              onClick={() => setProductToBeDeleted(null)}
+              onClick={() => setItemToBeDeleted(null)}
               variant="ghost"
             >
-              cancel
+              Cancel
             </Button>
           </StyledDeleteModalBtnsContainer>
         </StyledDeleteModalContainer>
@@ -81,4 +85,4 @@ const DeleteProduct = (props: DeleteProductProps) => {
   );
 };
 
-export default DeleteProduct;
+export default DeleteItemModal;

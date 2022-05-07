@@ -5,9 +5,9 @@ import { MdEdit } from "react-icons/md";
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { Product } from "shared-types";
-import DeleteProduct from "./DeleteProduct";
 import { StyledManageProductsContainer } from "./styles";
-import { ProductToBeDeleted } from "./types";
+import { ItemToBeDeleted } from "./types";
+import DeleteItemModal from "./types/DeleteItemModal";
 
 type RouterState = {
   reloadProductsList?: boolean;
@@ -19,7 +19,7 @@ const ManageProducts = () => {
   const routerState = location.state as RouterState;
 
   const [productToBeDeleted, setProductToBeDeleted] =
-    useState<ProductToBeDeleted>(null);
+    useState<ItemToBeDeleted>(null);
 
   const { error, isLoading, makeRequest, result } = useEndpoint<
     undefined,
@@ -72,9 +72,7 @@ const ManageProducts = () => {
 
                 <Button
                   color="danger"
-                  onClick={() =>
-                    setProductToBeDeleted({ name, productId: _id })
-                  }
+                  onClick={() => setProductToBeDeleted({ name, id: _id })}
                   size="sm"
                   startIcon={<RiDeleteBin6Fill />}
                   variant="ghost"
@@ -90,10 +88,10 @@ const ManageProducts = () => {
       <Outlet />
 
       {productToBeDeleted !== null && (
-        <DeleteProduct
-          productToBeDeleted={productToBeDeleted}
-          reloadProductsList={makeRequest}
-          setProductToBeDeleted={setProductToBeDeleted}
+        <DeleteItemModal
+          itemToBeDeleted={productToBeDeleted}
+          reloadList={makeRequest}
+          setItemToBeDeleted={setProductToBeDeleted}
         />
       )}
     </StyledManageProductsContainer>

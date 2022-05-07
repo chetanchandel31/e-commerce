@@ -24,7 +24,7 @@ export type EditProductDataInitialState = {
   photo: File | null;
 };
 
-export type ProductToBeDeleted = {
-  productId: string;
+export type ItemToBeDeleted = {
+  id: string;
   name: string;
 } | null;
