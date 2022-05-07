@@ -74,7 +74,7 @@ export const StyledDeleteModalBtnsContainer = styled(
   margin-top: 1rem;
 `;
 
-export const OrdersContainer = styled.div`
+export const StyledOrdersContainer = styled.div`
   padding: 2rem;
   display: flex;
   flex-direction: column;
@@ -108,5 +108,17 @@ export const SingleOrderProductsContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
+  }
+`;
+
+export const StyledManagecategoriesContaier = styled.div`
+  padding: 2rem 1rem;
+
+  & .category-list-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem;
+    border-bottom: solid 1px rgba(0, 0, 0, 0.26);
   }
 `;

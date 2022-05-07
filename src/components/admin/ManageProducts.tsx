@@ -51,12 +51,14 @@ const ManageProducts = () => {
       {!isLoading && result && result?.length > 0 && (
         <>
           <H4>Total {result?.length} products</H4>
+
           <div className="product-list-container">
             {result?.map(({ _id, name }, i) => (
               <div className="product-list-item" key={_id}>
                 <Text style={{ width: "30%" }}>
                   {i + 1}. {name}
                 </Text>
+
                 <Button
                   onClick={() =>
                     navigate(`/admin-dashboard/manage-products/${_id}`)
@@ -67,6 +69,7 @@ const ManageProducts = () => {
                 >
                   edit
                 </Button>
+
                 <Button
                   color="danger"
                   onClick={() =>

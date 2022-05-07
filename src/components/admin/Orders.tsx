@@ -4,7 +4,7 @@ import { useAuth } from "contexts/auth-context";
 import { Card, Chip, CircularProgress, H4, Text } from "haki-ui";
 import { Order } from "shared-types";
 import {
-  OrdersContainer,
+  StyledOrdersContainer,
   SingleOrder,
   SingleOrderProductsContainer,
 } from "./styles";
@@ -23,7 +23,7 @@ const Orders = () => {
   );
 
   return (
-    <OrdersContainer>
+    <StyledOrdersContainer>
       {isLoading && (
         <CircularProgress size={70} style={{ margin: "2rem auto" }} />
       )}
@@ -97,7 +97,7 @@ const Orders = () => {
           ))}
         </>
       )}
-    </OrdersContainer>
+    </StyledOrdersContainer>
   );
 };
 

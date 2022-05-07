@@ -2,7 +2,7 @@ import Layout from "components/core/Layout";
 import { useAuth } from "contexts/auth-context";
 import { Button, Card, Text, useTheme } from "haki-ui";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
-import { adminNavItems } from "../user/fixtures/adminNavItems";
+import { adminNavItems } from "./fixtures/adminNavItems";
 import { getButtonStyles, isSelected } from "../user/helper";
 import { AdminNavbar, AdminProfileContainer } from "../user/styles";
 

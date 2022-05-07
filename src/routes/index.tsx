@@ -3,6 +3,7 @@ import AdminDashBoard from "components/admin/AdminDashBoard";
 import CreateCategory from "components/admin/CreateCategory";
 import CreateProduct from "components/admin/CreateProduct";
 import EditProduct from "components/admin/EditProduct";
+import ManageCategories from "components/admin/ManageCategories";
 import ManageProducts from "components/admin/ManageProducts";
 import Orders from "components/admin/Orders";
 import Home from "components/core/Home";
@@ -44,6 +45,7 @@ const AppRoutes = () => (
             path="/admin-dashboard"
           >
             <Route element={<CreateCategory />} path="create-categories" />
+            <Route element={<ManageCategories />} path="manage-categories" />
             <Route element={<CreateProduct />} path="create-product" />
             <Route element={<ManageProducts />} path="manage-products">
               <Route element={<EditProduct />} path=":productId" />
