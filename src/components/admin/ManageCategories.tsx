@@ -1,49 +1,65 @@
 import useEndpoint from "api/useEndpoint";
-import { Button, Text } from "haki-ui";
+import { Button, CircularProgress, Text } from "haki-ui";
 import { useState } from "react";
 import { MdEdit } from "react-icons/md";
 import { RiDeleteBin6Fill } from "react-icons/ri";
+import { useNavigate } from "react-router-dom";
 import { Category } from "shared-types";
+import DeleteItemModal from "./helper/DeleteItemModal";
 import { StyledManagecategoriesContaier } from "./styles";
 import { ItemToBeDeleted } from "./types";
-import DeleteItemModal from "./helper/DeleteItemModal";
 
 const ManageCategories = () => {
+  const navigate = useNavigate();
+
   const [categoryToBeDeleted, setCategoryToBeDeleted] =
     useState<ItemToBeDeleted | null>(null);
 
-  const { makeRequest, result } = useEndpoint<undefined, Category[]>({
+  const { error, isLoading, makeRequest, result } = useEndpoint<
+    undefined,
+    Category[]
+  >({
     endpoint: "/categories",
     preLoadResult: true,
   });
 
-  // TODO: empty state
-  // loading state
-  // error
-
   return (
     <StyledManagecategoriesContaier>
-      {result?.map(({ _id, name }, i) => (
-        <div className="category-list-item" key={_id}>
-          <Text style={{ width: "30%" }}>
-            {i + 1}. {name}
-          </Text>
+      {error && <Text color="danger">{error}</Text>}
 
-          <Button size="sm" startIcon={<MdEdit />} variant="ghost">
-            edit
-          </Button>
+      {isLoading && <CircularProgress style={{ margin: "2rem auto" }} />}
 
-          <Button
-            color="danger"
-            onClick={() => setCategoryToBeDeleted({ id: _id, name })}
-            size="sm"
-            startIcon={<RiDeleteBin6Fill />}
-            variant="ghost"
-          >
-            delete
+      {!isLoading && result?.length === 0 && (
+        <div className="loading-state-container">
+          <Text>you have no categories yet 🎐</Text>{" "}
+          <Button onClick={() => navigate("/admin-dashboard/create-product")}>
+            Create a category
           </Button>
         </div>
-      ))}
+      )}
+
+      {!isLoading &&
+        result?.map(({ _id, name }, i) => (
+          <div className="category-list-item" key={_id}>
+            <Text style={{ width: "30%" }}>
+              {i + 1}. {name}
+            </Text>
+
+            <Button size="sm" startIcon={<MdEdit />} variant="ghost">
+              edit
+            </Button>
+
+            <Button
+              color="danger"
+              onClick={() => setCategoryToBeDeleted({ id: _id, name })}
+              size="sm"
+              startIcon={<RiDeleteBin6Fill />}
+              variant="ghost"
+            >
+              delete
+            </Button>
+          </div>
+        ))}
 
       {categoryToBeDeleted !== null && (
         <DeleteItemModal
