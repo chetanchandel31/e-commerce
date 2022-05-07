@@ -1,12 +1,18 @@
 import useEndpoint from "api/useEndpoint";
 import { Button, Text } from "haki-ui";
+import { useState } from "react";
 import { MdEdit } from "react-icons/md";
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import { Category } from "shared-types";
 import { StyledManagecategoriesContaier } from "./styles";
+import { ItemToBeDeleted } from "./types";
+import DeleteItemModal from "./types/DeleteItemModal";
 
 const ManageCategories = () => {
-  const { result } = useEndpoint<undefined, Category[]>({
+  const [categoryToBeDeleted, setCategoryToBeDeleted] =
+    useState<ItemToBeDeleted | null>(null);
+
+  const { makeRequest, result } = useEndpoint<undefined, Category[]>({
     endpoint: "/categories",
     preLoadResult: true,
   });
@@ -29,6 +35,7 @@ const ManageCategories = () => {
 
           <Button
             color="danger"
+            onClick={() => setCategoryToBeDeleted({ id: _id, name })}
             size="sm"
             startIcon={<RiDeleteBin6Fill />}
             variant="ghost"
@@ -38,7 +45,14 @@ const ManageCategories = () => {
         </div>
       ))}
 
-      <pre>{JSON.stringify(result, null, 2)}</pre>
+      {categoryToBeDeleted !== null && (
+        <DeleteItemModal
+          isItemCategory
+          itemToBeDeleted={categoryToBeDeleted}
+          reloadList={makeRequest}
+          setItemToBeDeleted={setCategoryToBeDeleted}
+        />
+      )}
     </StyledManagecategoriesContaier>
   );
 };

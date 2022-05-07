@@ -2,10 +2,12 @@ import useEndpoint from "api/useEndpoint";
 import { useAuth } from "contexts/auth-context";
 import { Button, Input, Text } from "haki-ui";
 import { FormEvent, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { StyledCreateCategoryForm } from "./styles";
 import { CreateCategoryRequest, CreateCategoryResponse } from "./types";
 
 const CreateCategory = () => {
+  const navigate = useNavigate();
   const { userInfo } = useAuth();
 
   const [newCategory, setNewCategory] = useState("");
@@ -22,7 +24,10 @@ const CreateCategory = () => {
     e.preventDefault();
     const res = await makeRequest({ name: newCategory });
 
-    if (res.type === "success") setNewCategory("");
+    if (res.type === "success") {
+      setNewCategory("");
+      navigate("/admin-dashboard/manage-categories");
+    }
   };
 
   return (

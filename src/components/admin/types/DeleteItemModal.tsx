@@ -2,7 +2,7 @@ import useEndpoint, { MakeRequestReturnType } from "api/useEndpoint";
 import { useAuth } from "contexts/auth-context";
 import { Backdrop, Button, Card, Text, useTheme } from "haki-ui";
 import { Dispatch, SetStateAction } from "react";
-import { Product } from "shared-types";
+import { Category, Product } from "shared-types";
 import { ItemToBeDeleted } from ".";
 import {
   StyledDeleteModalBtnsContainer,
@@ -14,12 +14,13 @@ type DeleteProductResponse = {
   message: string;
 };
 
-// TODO: use with second useEndpointHook
-// type DeleteCategoryResponse = {
-
-// }
+type DeleteCategoryResponse = {
+  deletedCategory: Category;
+  message: string;
+};
 
 type DeleteItemProps = {
+  isItemCategory?: boolean;
   itemToBeDeleted: ItemToBeDeleted;
   // eslint-disable-next-line no-unused-vars
   reloadList: (reqBody: undefined) => Promise<MakeRequestReturnType>;
@@ -27,16 +28,21 @@ type DeleteItemProps = {
 };
 
 const DeleteItemModal = (props: DeleteItemProps) => {
-  const { itemToBeDeleted, reloadList, setItemToBeDeleted } = props;
+  const { isItemCategory, itemToBeDeleted, reloadList, setItemToBeDeleted } =
+    props;
 
   const { colors } = useTheme();
   const { userInfo } = useAuth();
 
+  const endpoint = isItemCategory
+    ? `/category/${itemToBeDeleted?.id}/${userInfo?.user._id}`
+    : `/product/${itemToBeDeleted?.id}/${userInfo?.user._id}`;
+
   const { error, isLoading, makeRequest } = useEndpoint<
     undefined,
-    DeleteProductResponse
+    DeleteProductResponse | DeleteCategoryResponse
   >({
-    endpoint: `/product/${itemToBeDeleted?.id}/${userInfo?.user._id}`,
+    endpoint,
     method: "DELETE",
   });
 
