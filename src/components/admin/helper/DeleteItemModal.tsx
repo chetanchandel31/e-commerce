@@ -3,7 +3,7 @@ import { useAuth } from "contexts/auth-context";
 import { Backdrop, Button, Card, Text, useTheme } from "haki-ui";
 import { Dispatch, SetStateAction } from "react";
 import { Category, Product } from "shared-types";
-import { ItemToBeDeleted } from ".";
+import { ItemToBeDeleted } from "../types";
 import {
   StyledDeleteModalBtnsContainer,
   StyledDeleteModalContainer,

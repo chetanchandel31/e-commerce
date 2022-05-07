@@ -7,7 +7,7 @@ import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { Product } from "shared-types";
 import { StyledManageProductsContainer } from "./styles";
 import { ItemToBeDeleted } from "./types";
-import DeleteItemModal from "./types/DeleteItemModal";
+import DeleteItemModal from "./helper/DeleteItemModal";
 
 type RouterState = {
   reloadProductsList?: boolean;

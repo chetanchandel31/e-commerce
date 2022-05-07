@@ -6,7 +6,7 @@ import { RiDeleteBin6Fill } from "react-icons/ri";
 import { Category } from "shared-types";
 import { StyledManagecategoriesContaier } from "./styles";
 import { ItemToBeDeleted } from "./types";
-import DeleteItemModal from "./types/DeleteItemModal";
+import DeleteItemModal from "./helper/DeleteItemModal";
 
 const ManageCategories = () => {
   const [categoryToBeDeleted, setCategoryToBeDeleted] =
