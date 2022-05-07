@@ -24,7 +24,7 @@ type DeleteItemProps = {
   itemToBeDeleted: ItemToBeDeleted;
   // eslint-disable-next-line no-unused-vars
   reloadList: (reqBody: undefined) => Promise<MakeRequestReturnType>;
-  setItemToBeDeleted: Dispatch<SetStateAction<ItemToBeDeleted>>;
+  setItemToBeDeleted: Dispatch<SetStateAction<ItemToBeDeleted | null>>;
 };
 
 const DeleteItemModal = (props: DeleteItemProps) => {
@@ -35,8 +35,8 @@ const DeleteItemModal = (props: DeleteItemProps) => {
   const { userInfo } = useAuth();
 
   const endpoint = isItemCategory
-    ? `/category/${itemToBeDeleted?.id}/${userInfo?.user._id}`
-    : `/product/${itemToBeDeleted?.id}/${userInfo?.user._id}`;
+    ? `/category/${itemToBeDeleted.id}/${userInfo?.user._id}`
+    : `/product/${itemToBeDeleted.id}/${userInfo?.user._id}`;
 
   const { error, isLoading, makeRequest } = useEndpoint<
     undefined,
@@ -66,7 +66,7 @@ const DeleteItemModal = (props: DeleteItemProps) => {
           <div>
             <Text as="span">Delete</Text>{" "}
             <Text as="span" weight="semi-bold">
-              {itemToBeDeleted?.name}
+              {itemToBeDeleted.name}
             </Text>
             ?
           </div>

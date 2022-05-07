@@ -19,7 +19,7 @@ const ManageProducts = () => {
   const routerState = location.state as RouterState;
 
   const [productToBeDeleted, setProductToBeDeleted] =
-    useState<ItemToBeDeleted>(null);
+    useState<ItemToBeDeleted | null>(null);
 
   const { error, isLoading, makeRequest, result } = useEndpoint<
     undefined,
