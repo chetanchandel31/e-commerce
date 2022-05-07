@@ -28,3 +28,12 @@ export type ItemToBeDeleted = {
   id: string;
   name: string;
 } | null;
+
+export type CategoryToBeEdited = {
+  id: string;
+  name: string;
+};
+
+export type EditCategoriesRequest = {
+  name: string;
+};

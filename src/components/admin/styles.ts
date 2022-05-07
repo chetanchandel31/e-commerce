@@ -129,4 +129,26 @@ export const StyledManagecategoriesContaier = styled.div`
     align-items: center;
     gap: 1rem;
   }
+
+  & .category-name {
+    width: 30%;
+
+    @media (max-width: 45em) {
+      width: 50%;
+    }
+  }
+
+  & .edit-category-input-container {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+`;
+
+export const StyledEditCategoryContainer = styled.div`
+  margin-top: 0.5rem;
+
+  & .edit-category-btns {
+    margin-top: 4px;
+  }
 `;

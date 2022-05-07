@@ -6,14 +6,18 @@ import { RiDeleteBin6Fill } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 import { Category } from "shared-types";
 import DeleteItemModal from "./helper/DeleteItemModal";
+import EditCategoryInput from "./helper/EditCategoryInput";
 import { StyledManagecategoriesContaier } from "./styles";
-import { ItemToBeDeleted } from "./types";
+import { CategoryToBeEdited, ItemToBeDeleted } from "./types";
 
 const ManageCategories = () => {
   const navigate = useNavigate();
 
   const [categoryToBeDeleted, setCategoryToBeDeleted] =
     useState<ItemToBeDeleted | null>(null);
+
+  const [categoryToBeEdited, setCategoryToBeEdited] =
+    useState<CategoryToBeEdited | null>(null);
 
   const { error, isLoading, makeRequest, result } = useEndpoint<
     undefined,
@@ -41,11 +45,29 @@ const ManageCategories = () => {
       {!isLoading &&
         result?.map(({ _id, name }, i) => (
           <div className="category-list-item" key={_id}>
-            <Text style={{ width: "30%" }}>
-              {i + 1}. {name}
-            </Text>
+            <div className="category-name">
+              {categoryToBeEdited?.id === _id ? (
+                <span className="edit-category-input-container">
+                  {i + 1}.{" "}
+                  <EditCategoryInput
+                    cancelEdit={() => setCategoryToBeEdited(null)}
+                    categoryToBeEdited={categoryToBeEdited}
+                    reloadCategoriesList={makeRequest}
+                  />
+                </span>
+              ) : (
+                <Text>
+                  {i + 1}. {name}
+                </Text>
+              )}
+            </div>
 
-            <Button size="sm" startIcon={<MdEdit />} variant="ghost">
+            <Button
+              onClick={() => setCategoryToBeEdited({ id: _id, name })}
+              size="sm"
+              startIcon={<MdEdit />}
+              variant="ghost"
+            >
               edit
             </Button>
 
