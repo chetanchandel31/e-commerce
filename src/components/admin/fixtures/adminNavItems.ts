@@ -5,7 +5,7 @@ export const adminNavItems = [
   },
   {
     title: "create categories",
-    pathName: "/admin-dashboard/create-categories",
+    pathName: "/admin-dashboard/create-category",
   },
   {
     title: "manage categories",

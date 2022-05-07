@@ -31,7 +31,7 @@ export const StyledManageProductsContainer = styled.div`
     align-items: center;
   }
 
-  & .loading-state-container {
+  & .empty-state-container {
     padding: 1rem;
     display: flex;
     flex-direction: column;
@@ -120,5 +120,13 @@ export const StyledManagecategoriesContaier = styled.div`
     justify-content: space-between;
     padding: 0.5rem;
     border-bottom: solid 1px rgba(0, 0, 0, 0.26);
+  }
+
+  & .empty-state-container {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
   }
 `;

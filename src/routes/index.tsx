@@ -44,7 +44,7 @@ const AppRoutes = () => (
             }
             path="/admin-dashboard"
           >
-            <Route element={<CreateCategory />} path="create-categories" />
+            <Route element={<CreateCategory />} path="create-category" />
             <Route element={<ManageCategories />} path="manage-categories" />
             <Route element={<CreateProduct />} path="create-product" />
             <Route element={<ManageProducts />} path="manage-products">

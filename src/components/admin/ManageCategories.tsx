@@ -30,9 +30,9 @@ const ManageCategories = () => {
       {isLoading && <CircularProgress style={{ margin: "2rem auto" }} />}
 
       {!isLoading && result?.length === 0 && (
-        <div className="loading-state-container">
+        <div className="empty-state-container">
           <Text>you have no categories yet 🎐</Text>{" "}
-          <Button onClick={() => navigate("/admin-dashboard/create-product")}>
+          <Button onClick={() => navigate("/admin-dashboard/create-category")}>
             Create a category
           </Button>
         </div>

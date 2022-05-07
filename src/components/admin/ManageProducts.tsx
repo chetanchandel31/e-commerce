@@ -40,7 +40,7 @@ const ManageProducts = () => {
       {isLoading && <CircularProgress style={{ margin: "2rem auto" }} />}
 
       {!isLoading && result?.length === 0 && (
-        <div className="loading-state-container">
+        <div className="empty-state-container">
           <Text>you have no products yet 🎐</Text>{" "}
           <Button onClick={() => navigate("/admin-dashboard/create-product")}>
             Create a product
