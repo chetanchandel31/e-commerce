@@ -3,7 +3,8 @@ import Layout from "components/core/Layout";
 import { useAuth } from "contexts/auth-context";
 import { Button, IconButton, Input, Text, useTheme } from "haki-ui";
 import { ChangeEvent, FormEvent, useState } from "react";
-import { AiOutlineMail } from "react-icons/ai";
+import { AiOutlineMail, AiOutlineRight } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
 import EyeIcon from "./helper/EyeIcon";
 import { StyledAuthForm } from "./styles";
 import { SigninReqBody, SigninResponse } from "./types";
@@ -15,9 +16,10 @@ const signinDataInitialState = {
 };
 
 const Signin = () => {
-  const theme = useTheme();
-  const iconColor = theme.colors.disabled.dark;
+  const { colors } = useTheme();
+  const iconColor = colors.disabled.dark;
 
+  const navigate = useNavigate();
   const { signIn } = useAuth();
 
   const { error, isLoading, makeRequest } = useEndpoint<
@@ -41,8 +43,6 @@ const Signin = () => {
 
     if (signinResult.type === "success") signIn(signinResult.data);
   };
-
-  const doDisableSignin = !email || !password;
 
   const toggleShowPassword = () =>
     setSigninData((prev) => ({
@@ -96,19 +96,17 @@ const Signin = () => {
           </Text>
         )}
 
-        <Button disabled={doDisableSignin} fullWidth isLoading={isLoading}>
-          Sign in
-        </Button>
-
-        <div>
+        <div className="primary-btn-container">
           <Button
-            onClick={() => handleDummySignIn()}
-            size="sm"
-            type="button"
-            variant="ghost"
+            disabled={!email || !password}
+            fullWidth
+            isLoading={isLoading}
           >
-            Use test credentials
+            Sign in
           </Button>
+        </div>
+
+        <div className="test-credential-btns">
           <Button
             onClick={() => handleDummySignIn(true)}
             size="sm"
@@ -117,7 +115,26 @@ const Signin = () => {
           >
             Use test credentials (admin)
           </Button>
+          <Button
+            onClick={() => handleDummySignIn()}
+            size="sm"
+            type="button"
+            variant="ghost"
+          >
+            Use test credentials
+          </Button>
         </div>
+
+        <Button
+          fullWidth
+          endIcon={<AiOutlineRight />}
+          onClick={() => navigate("/signup")}
+          style={{ color: "rgba(0, 0,0,0.6)" }}
+          type="button"
+          variant="ghost"
+        >
+          Create new account
+        </Button>
       </StyledAuthForm>
     </Layout>
   );

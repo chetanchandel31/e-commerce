@@ -11,8 +11,13 @@ export const StyledAuthForm = styled.form`
   margin: auto;
   margin-top: 6rem;
 
-  & > button {
+  & .primary-btn-container {
+    width: 100%;
     margin-top: 1rem;
+  }
+
+  & > .test-credential-btns {
+    text-align: center;
   }
 `;
 

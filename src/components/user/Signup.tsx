@@ -2,7 +2,7 @@ import useEndpoint from "api/useEndpoint";
 import Layout from "components/core/Layout";
 import { Alert, Button, IconButton, Input, Text, useTheme } from "haki-ui";
 import { ChangeEvent, FormEvent, useState } from "react";
-import { AiOutlineMail, AiOutlineUser } from "react-icons/ai";
+import { AiOutlineMail, AiOutlineRight, AiOutlineUser } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import EyeIcon from "./helper/EyeIcon";
 import { StyledAuthForm } from "./styles";
@@ -18,26 +18,30 @@ const signupDataInitialState = {
 };
 
 const Signup = () => {
-  const theme = useTheme();
-  const iconColor = theme.colors.disabled.dark;
+  const { colors } = useTheme();
+  const iconColor = colors.disabled.dark;
 
   const navigate = useNavigate();
 
-  const signupEndpointState = useEndpoint<SignupReqBody, SignupResponse>({
+  const { error, isLoading, makeRequest, result } = useEndpoint<
+    SignupReqBody,
+    SignupResponse
+  >({
     endpoint: "/signup",
     method: "POST",
   });
-  const { error, isLoading, makeRequest, result } = signupEndpointState;
 
-  const [signupData, setSignupData] = useState(signupDataInitialState);
-  const {
-    email,
-    name,
-    password,
-    reEnterPassword,
-    doShowPassword,
-    doShowReEnterPassword,
-  } = signupData;
+  const [
+    {
+      email,
+      name,
+      password,
+      reEnterPassword,
+      doShowPassword,
+      doShowReEnterPassword,
+    },
+    setSignupData,
+  ] = useState(signupDataInitialState);
 
   const handleChange = ({ target }: ChangeEvent<HTMLInputElement>) =>
     setSignupData((prev) => ({ ...prev, [target.name]: target.value }));
@@ -55,6 +59,7 @@ const Signup = () => {
       ...prev,
       doShowPassword: !prev.doShowPassword,
     }));
+
   const toggleShowReEnterPassword = () =>
     setSignupData((prev) => ({
       ...prev,
@@ -130,8 +135,21 @@ const Signup = () => {
           </Text>
         )}
 
-        <Button disabled={doDisableSubmit} fullWidth isLoading={isLoading}>
-          Sign up
+        <div className="primary-btn-container">
+          <Button disabled={doDisableSubmit} fullWidth isLoading={isLoading}>
+            Sign up
+          </Button>
+        </div>
+
+        <Button
+          fullWidth
+          endIcon={<AiOutlineRight />}
+          onClick={() => navigate("/signin")}
+          style={{ color: "rgba(0, 0,0,0.6)" }}
+          type="button"
+          variant="ghost"
+        >
+          Already have an account
         </Button>
       </StyledAuthForm>
 
