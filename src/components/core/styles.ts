@@ -12,6 +12,12 @@ type StyledLayoutContainerProps = {
   maxWidth?: string;
 };
 
+type StyledFiltersContainerProps = {
+  doShowFiltersOnMobile: boolean;
+};
+
+const BREAKPOINT_FOR_TOGGLING_HOMEPAGE_LAYOUT = "83em";
+
 export const StyledHeaderContainer = styled.nav<StyledHeaderContainerProps>`
   background-color: ${({ color }) => color};
   padding: 1rem;
@@ -55,7 +61,7 @@ export const StyledLayoutContainer = styled.div<StyledLayoutContainerProps>`
   flex-grow: 1;
 
   & > h2,
-  h4 {
+  > h4 {
     text-align: center;
   }
 
@@ -157,5 +163,95 @@ export const StyledFooter = styled.footer`
     border-top: solid 1px rgba(0, 0, 0, 0.26);
     width: 100%;
     text-align: center;
+  }
+`;
+
+export const StyledHomepageContainer = styled.div`
+  display: flex;
+  gap: 2rem;
+
+  @media (max-width: ${BREAKPOINT_FOR_TOGGLING_HOMEPAGE_LAYOUT}) {
+    flex-direction: column;
+  }
+
+  & .filters {
+    flex-grow: 1;
+  }
+
+  & .products-section {
+    width: 62rem;
+
+    @media (max-width: ${BREAKPOINT_FOR_TOGGLING_HOMEPAGE_LAYOUT}) {
+      width: 100%;
+    }
+  }
+`;
+
+export const StyledFiltersContainer = styled.div<StyledFiltersContainerProps>`
+  & .filters-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  & .expand-filters-btn {
+    transform: ${({ doShowFiltersOnMobile }) =>
+      doShowFiltersOnMobile ? `rotate(0deg)` : `rotate(-180deg)`};
+    transition: transform 0.5s;
+
+    @media (min-width: ${BREAKPOINT_FOR_TOGGLING_HOMEPAGE_LAYOUT}) {
+      display: none;
+    }
+  }
+
+  & .filter-sections-container {
+    margin-top: 1rem;
+
+    @media (max-width: ${BREAKPOINT_FOR_TOGGLING_HOMEPAGE_LAYOUT}) {
+      height: ${({ doShowFiltersOnMobile }) =>
+        doShowFiltersOnMobile ? `45vh` : `0`};
+      overflow: hidden auto;
+      transition: height 0.5s;
+      padding-right: 1rem;
+
+      &::-webkit-scrollbar {
+        width: 0.5rem;
+        background-color: rgba(0, 0, 0, 0.12);
+      }
+      &::-webkit-scrollbar-thumb {
+        background-color: rgba(0, 0, 0, 0.26);
+        border-radius: 5rem;
+      }
+    }
+
+    & > div {
+      padding: 1rem 0;
+      border-bottom: solid 1px rgba(0, 0, 0, 0.26);
+    }
+  }
+
+  & .filter-section-heading {
+    margin-bottom: 1rem;
+  }
+
+  & .single-category-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  & .minimum-price-slider {
+    width: 100%;
+  }
+
+  & .price-slider-datalist {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    padding-top: 0px;
+  }
+
+  & .price-slider-option {
+    min-width: 26px;
   }
 `;

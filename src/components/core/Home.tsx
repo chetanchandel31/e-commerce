@@ -2,9 +2,11 @@ import useEndpoint from "api/useEndpoint";
 import { Button, CircularProgress, Text } from "haki-ui";
 import { ImSpinner11 } from "react-icons/im";
 import { Product } from "shared-types";
+import Filters from "./Filters";
 import ProductCard from "./helper/ProductCard";
 import Layout from "./Layout";
 import {
+  StyledHomepageContainer,
   StyledHomepageError,
   StyledProductCardsContainer,
   StyledSpinnerContainer,
@@ -17,32 +19,40 @@ const Home = () => {
   });
 
   return (
-    <Layout>
-      {error && (
-        <StyledHomepageError>
-          <Text color="danger">{error}</Text>
+    <Layout maxWidth="95%">
+      <StyledHomepageContainer className="homepage-container">
+        <aside className="filters">
+          <Filters />
+        </aside>
 
-          <Button
-            onClick={() => window.location.reload()}
-            startIcon={<ImSpinner11 />}
-            variant="ghost"
-          >
-            reload
-          </Button>
-        </StyledHomepageError>
-      )}
+        <section className="products-section">
+          {error && (
+            <StyledHomepageError>
+              <Text color="danger">{error}</Text>
 
-      {isLoading && (
-        <StyledSpinnerContainer>
-          <CircularProgress size={90} />
-        </StyledSpinnerContainer>
-      )}
+              <Button
+                onClick={() => window.location.reload()}
+                startIcon={<ImSpinner11 />}
+                variant="ghost"
+              >
+                reload
+              </Button>
+            </StyledHomepageError>
+          )}
 
-      <StyledProductCardsContainer>
-        {result?.map((product) => (
-          <ProductCard key={product._id} product={product} />
-        ))}
-      </StyledProductCardsContainer>
+          {isLoading && (
+            <StyledSpinnerContainer>
+              <CircularProgress size={90} />
+            </StyledSpinnerContainer>
+          )}
+
+          <StyledProductCardsContainer>
+            {result?.map((product) => (
+              <ProductCard key={product._id} product={product} />
+            ))}
+          </StyledProductCardsContainer>
+        </section>
+      </StyledHomepageContainer>
     </Layout>
   );
 };
