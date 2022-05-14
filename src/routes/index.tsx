@@ -7,6 +7,7 @@ import ManageCategories from "components/admin/ManageCategories";
 import ManageProducts from "components/admin/ManageProducts";
 import Orders from "components/admin/Orders";
 import Home from "components/core/Home";
+import NotFoundPage from "components/user/NotFoundPage";
 import Cart from "components/user/Cart";
 import Signin from "components/user/Signin";
 import Signup from "components/user/Signup";
@@ -27,15 +28,6 @@ const AppRoutes = () => (
 
           <Route path="/signin" element={<Signin />} />
 
-          {/* <Route
-            element={
-              <PrivateRoute>
-                <UserDashBoard />
-              </PrivateRoute>
-            }
-            path="/user-dashboard"
-          /> */}
-
           <Route
             element={
               <AdminRoute>
@@ -52,6 +44,8 @@ const AppRoutes = () => (
             </Route>
             <Route element={<Orders />} path="orders" />
           </Route>
+
+          <Route element={<NotFoundPage />} path="*" />
         </Routes>
       </CartProvider>
     </AuthProvider>

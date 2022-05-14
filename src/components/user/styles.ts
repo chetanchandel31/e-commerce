@@ -108,3 +108,20 @@ export const StyledPricingDetailsContainer = styled.div`
     padding: 0.5rem 0;
   }
 `;
+
+export const StyledNotFoundContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  text-align: center;
+
+  @media (max-width: 45em) {
+    padding-top: 2.5rem;
+  }
+
+  & > img {
+    max-width: 600px;
+    width: 90%;
+  }
+`;
