@@ -185,6 +185,23 @@ export const StyledHomepageContainer = styled.div`
       width: 100%;
     }
   }
+
+  & .homepage-empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    text-align: center;
+
+    & > img {
+      width: 90%;
+      max-width: 600px;
+    }
+  }
+
+  & .visible-products-count {
+    margin-bottom: 1.5rem;
+  }
 `;
 
 export const StyledFiltersContainer = styled.div<StyledFiltersContainerProps>`
