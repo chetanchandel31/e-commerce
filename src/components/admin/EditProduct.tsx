@@ -116,7 +116,7 @@ const EditProduct = () => {
   const imageUploadBtnRef = useRef<HTMLInputElement>(null);
 
   return (
-    <Backdrop blur={2} show style={{ position: "fixed" }}>
+    <Backdrop blur={2} show style={{ position: "fixed", zIndex: "21" }}>
       <Card
         variant="elevated"
         style={{

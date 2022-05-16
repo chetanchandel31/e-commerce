@@ -56,7 +56,7 @@ const DeleteItemModal = (props: DeleteItemProps) => {
   };
 
   return (
-    <Backdrop blur={2} show style={{ position: "fixed" }}>
+    <Backdrop blur={2} show style={{ position: "fixed", zIndex: "21" }}>
       <Card
         maxWidth={400}
         style={{ width: "90%", backgroundColor: colors.primary.contrastText }}
