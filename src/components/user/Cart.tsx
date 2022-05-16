@@ -30,11 +30,7 @@ const Cart = () => {
     return (
       <Layout>
         {isLoading && (
-          <CircularProgress
-            size={100}
-            style={{ margin: "8rem auto" }}
-            thickness={9}
-          />
+          <CircularProgress size={90} style={{ margin: "8rem auto" }} />
         )}
 
         {error && (

@@ -31,7 +31,9 @@ const ManageCategories = () => {
     <StyledManagecategoriesContaier>
       {error && <Text color="danger">{error}</Text>}
 
-      {isLoading && <CircularProgress style={{ margin: "2rem auto" }} />}
+      {isLoading && (
+        <CircularProgress size={70} style={{ margin: "2rem auto" }} />
+      )}
 
       {!isLoading && result?.length === 0 && (
         <div className="empty-state-container">

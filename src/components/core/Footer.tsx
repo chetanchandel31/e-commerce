@@ -8,11 +8,11 @@ const Footer = () => (
     </Text>
 
     <Button
-      onClick={() => {
+      onClick={() =>
         window
           ?.open("https://www.youtube.com/watch?v=iik25wqIuFo", "_blank")
-          ?.focus();
-      }}
+          ?.focus()
+      }
       size="sm"
       variant="ghost"
     >
