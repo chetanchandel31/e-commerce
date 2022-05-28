@@ -59,7 +59,7 @@ const ProductCard = ({ enableAddToCart = true, product }: ProductCardProps) => {
   const isOutOfStock = stock < 1;
 
   return (
-    <Card>
+    <Card data-testid="product-card">
       <StyledProductCard isOutOfStock={isOutOfStock}>
         <Card.Media
           alt={product.name}

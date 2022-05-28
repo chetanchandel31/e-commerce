@@ -80,7 +80,7 @@ const Home = () => {
 
           {/* 2. loading state ✅ */}
           {isLoading && (
-            <StyledSpinnerContainer>
+            <StyledSpinnerContainer data-testid="homepage-spinner">
               <CircularProgress size={90} />
             </StyledSpinnerContainer>
           )}
