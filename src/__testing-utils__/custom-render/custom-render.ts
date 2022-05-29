@@ -14,6 +14,6 @@ type CustomRender = (
 ) => RenderResult<typeof DOMqueries, HTMLElement, HTMLElement>;
 
 /** Most components in this project break if rendered without being wrapped in certain Providers.
- *  This is a util takes care of wrapping the component within all such Providers */
+ *  This util takes care of wrapping the component within all such Providers */
 export const customRender: CustomRender = (ui, options) =>
   render(ui, { wrapper: Wrapper, ...options });

@@ -3,7 +3,6 @@ import { BASE_URL } from "api";
 import Home from "components/core/Home";
 import { rest } from "msw";
 import { setupServer } from "msw/node";
-import { act } from "react-dom/test-utils";
 import { customRender } from "__testing-utils__/custom-render/custom-render";
 import { dummyProductsList } from "__testing-utils__/fixtures/dummyProducts";
 
@@ -11,6 +10,9 @@ describe("Homepage", () => {
   const server = setupServer(
     rest.get(`${BASE_URL}/products`, (req, res, ctx) => {
       return res(ctx.json(dummyProductsList));
+    }),
+    rest.get(`${BASE_URL}/categories`, (req, res, ctx) => {
+      return res(ctx.json([]));
     })
   );
 
@@ -19,9 +21,7 @@ describe("Homepage", () => {
   afterAll(() => server.close());
 
   it("shows spinner initially and then removes it", async () => {
-    act(() => {
-      customRender(<Home />);
-    });
+    customRender(<Home />);
 
     const loader = await screen.findByTestId("homepage-spinner");
     expect(loader).toBeInTheDocument();
@@ -34,9 +34,7 @@ describe("Homepage", () => {
   });
 
   it("shows list of products", async () => {
-    act(() => {
-      customRender(<Home />);
-    });
+    customRender(<Home />);
 
     const productCards = await screen.findAllByTestId("product-card");
 
@@ -51,9 +49,7 @@ describe("Homepage", () => {
       })
     );
 
-    act(() => {
-      customRender(<Home />);
-    });
+    customRender(<Home />);
 
     const reloadButton = await screen.findByRole("button", { name: /reload/i });
     const errorMessage = await screen.findByText(
@@ -66,11 +62,10 @@ describe("Homepage", () => {
 
   it("shows 'out of stock' on 2 cards", async () => {
     // currently the mock data is such, only 2 cards should show "out of stock"
-    act(() => {
-      customRender(<Home />);
-    });
 
-    const outOfStockCards = await screen.findAllByText(/out of stock/i);
+    customRender(<Home />);
+
+    const outOfStockCards = await screen.findAllByText("Out of stock");
 
     expect(outOfStockCards).toHaveLength(2);
 

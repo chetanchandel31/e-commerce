@@ -1,5 +1,6 @@
 import { API } from "api";
 import { useEffect, useState } from "react";
+import { customLogger } from "utils/customLogger";
 import { getRequestHeaders } from "./getRequestHeaders";
 
 type Args =
@@ -48,7 +49,7 @@ const useEndpoint = <RequestBody, Response>(args: Args) => {
 
       return { data: res.data as Response, type: "success" };
     } catch (error: any) {
-      console.log(error, `${method} request to ${endpoint} failed`);
+      customLogger(error, `${method} request to ${endpoint} failed`);
 
       setError(
         error?.response?.data?.error ||
